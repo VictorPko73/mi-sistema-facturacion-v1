@@ -4,6 +4,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_migrate import Migrate # Importar Flask-Migrate
+from routes.clientes import clientes_bp # Importa Blueprint de clientes
 import os
 
 # Importar la instancia db desde models.py
@@ -30,6 +31,9 @@ db.init_app(app)
 # Inicializar Flask-Migrate
 # Necesita la app Flask y la instancia de SQLAlchemy (db)
 migrate = Migrate(app, db)
+
+# --- Registrar Blueprints ---
+app.register_blueprint(clientes_bp)
 
 # --- Rutas (Placeholder por ahora) ---
 @app.route('/')
