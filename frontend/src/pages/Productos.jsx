@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import apiClient from '../api'; // Nuestro cliente Axios
 // Importaremos los modales más adelante
-// import AddProductoModal from '../components/AddProductoModal';
+import AddProductoModal from '../components/AddProductoModal';
 // import EditProductoModal from '../components/EditProductoModal';
 // import ConfirmationModal from '../components/ConfirmationModal';
 
@@ -12,7 +12,7 @@ function Productos() {
     const [error, setError] = useState(null);
 
     // Estados para los modales (los configuraremos luego)
-    // const [showAddModal, setShowAddModal] = useState(false);
+    const [showAddModal, setShowAddModal] = useState(false);
     // const [showEditModal, setShowEditModal] = useState(false);
     // const [editingProducto, setEditingProducto] = useState(null);
     // const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -34,6 +34,16 @@ function Productos() {
         } finally {
             setLoading(false);
         }
+    };
+
+    // Función para abrir el modal de añadir
+    const handleShowAddModal = () => setShowAddModal(true); // <-- Añadir
+    // Función para cerrar el modal de añadir
+    const handleCloseAddModal = () => setShowAddModal(false); // <-- Añadir
+
+    // Función para actualizar la lista después de añadir un producto
+    const handleProductoAdded = (newProducto) => { // <-- Añadir
+        setProductos(prevProductos => [newProducto, ...prevProductos]);
     };
 
     // useEffect para cargar los productos al montar
@@ -81,9 +91,7 @@ function Productos() {
 
             {/* Botón para añadir producto (lo implementaremos más tarde) */}
             <div className="mb-3">
-                <button className="btn btn-success" disabled> {/* Deshabilitado por ahora */}
-                    + Añadir Producto
-                </button>
+                <button className="btn btn-success"onClick={handleShowAddModal} > + Añadir Producto </button>
             </div>
 
             {/* Tabla de Productos */}
@@ -111,7 +119,7 @@ function Productos() {
                                 <td>{producto.precio.toFixed(2)}</td>
                                 <td>{producto.stock ?? '-'}</td> {/* Mostrar '-' si stock es null/undefined */}
                                 <td>
-                                    <button className="btn btn-sm btn-warning me-2" disabled>Editar</button>
+                                    <button className="btn btn-sm btn-warning me-2" >Editar</button>
                                     <button className="btn btn-sm btn-danger" disabled>Eliminar</button>
                                 </td>
                             </tr>
@@ -121,7 +129,11 @@ function Productos() {
             )}
 
             {/* Aquí irán los modales más adelante */}
-            {/* <AddProductoModal ... /> */}
+            <AddProductoModal
+                show={showAddModal}
+                handleClose={handleCloseAddModal}
+                onProductoAdded={handleProductoAdded}
+            />
             {/* <EditProductoModal ... /> */}
             {/* <ConfirmationModal ... /> */}
 
