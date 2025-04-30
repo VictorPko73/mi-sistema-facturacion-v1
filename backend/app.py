@@ -46,5 +46,6 @@ def index():
 
 # --- Punto de Entrada (si se ejecuta directamente) ---
 if __name__ == '__main__':
+    print("--- Intentando iniciar el servidor Flask (Blueprints comentados) ---")
     # Cambiamos el puerto a 5001 como indicaste
     app.run(debug=True, port=5001)
