@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import apiClient from '../api';
 import AddClienteModal from '../components/AddClienteModal'; // <-- Importar el modal añadir cliente
 import EditClienteModal from '../components/EditClienteModal'; // <-- Añadir el modal modificar cliente
+import ConfirmationModal from '../components/ConfirmationModal'; // <-- Añadir modal para confirmar eliminación
 
 
 function Clientes() {
@@ -12,6 +13,11 @@ function Clientes() {
     // Estados para el modal de edición
     const [showEditModal, setShowEditModal] = useState(false);
     const [editingCliente, setEditingCliente] = useState(null); // Guarda el cliente a editar
+    // Estados para el modal de confirmación de eliminación
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deletingCliente, setDeletingCliente] = useState(null); // Guarda el cliente a eliminar
+    const [isDeleting, setIsDeleting] = useState(false); // Para feedback en el botón de confirmación
+    const [deleteError, setDeleteError] = useState(null); // Para errores específicos de eliminación
 
     // Estado para controlar la visibilidad del modal
     const [showAddModal, setShowAddModal] = useState(false);
@@ -47,6 +53,54 @@ function Clientes() {
             prevClientes.map(c => (c.id === updatedCliente.id ? updatedCliente : c))
         );
         // Opcionalmente, podrías volver a cargar toda la lista: fetchClientes();
+    };
+
+    // Función para abrir el modal de confirmación de eliminación
+    const handleShowDeleteModal = (cliente) => {
+        setDeletingCliente(cliente); // Guarda el cliente seleccionado
+        setDeleteError(null); // Limpia errores previos de eliminación
+        setShowDeleteModal(true);     // Abre el modal
+    };
+
+    // Función para cerrar el modal de confirmación
+    const handleCloseDeleteModal = () => {
+        setShowDeleteModal(false);
+        // No limpiamos deletingCliente aquí todavía, lo necesitamos en handleConfirmDelete
+    };
+
+    // Función que se ejecuta al confirmar la eliminación en el modal
+    const handleConfirmDelete = async () => {
+        if (!deletingCliente) return; // Seguridad
+
+        setIsDeleting(true); // Indicar que la eliminación está en proceso
+        setDeleteError(null); // Limpiar errores
+
+        try {
+            // Petición DELETE a la API
+            const response = await apiClient.delete(`/clientes/${deletingCliente.id}`);
+
+            if (response.status === 200 || response.status === 204) { // 200 OK o 204 No Content
+                // Eliminar el cliente de la lista en el estado local
+                setClientes(prevClientes =>
+                    prevClientes.filter(c => c.id !== deletingCliente.id)
+                );
+                handleCloseDeleteModal(); // Cerrar el modal
+            } else {
+                setDeleteError('Respuesta inesperada del servidor al eliminar.');
+            }
+        } catch (err) {
+            console.error("Error al eliminar cliente:", err);
+            // Intentar mostrar error específico (ej: si tiene facturas asociadas y hay restricción)
+            const errorMessage = err.response?.data?.error || err.message || "Ocurrió un error al eliminar el cliente.";
+            setDeleteError(errorMessage);
+            // No cerramos el modal si hay error, para que el usuario vea el mensaje
+        } finally {
+            setIsDeleting(false); // Indicar que la eliminación ha terminado
+            // Limpiamos deletingCliente aquí, después de usarlo
+            if (!deleteError) { // Solo si no hubo error
+                setDeletingCliente(null);
+            }
+        }
     };
 
     // Función para cargar clientes (la movemos fuera de useEffect para poder llamarla de nuevo si es necesario)
@@ -130,7 +184,7 @@ function Clientes() {
                             <th>Apellido</th>
                             <th>Email</th>
                             <th>Teléfono</th>
-                            {/* Podríamos añadir Dirección aquí si quisiéramos */}
+                            <th>Dirección</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -142,9 +196,11 @@ function Clientes() {
                                 <td>{cliente.apellido || '-'}</td>
                                 <td>{cliente.email}</td>
                                 <td>{cliente.telefono || '-'}</td>
+                                <td>{cliente.direccion || '-'}</td>
                                 <td>
                                     <button className="btn btn-sm btn-warning me-2" onClick={() => handleShowEditModal(cliente)}>Editar</button>
-                                    <button className="btn btn-sm btn-danger" disabled>Eliminar</button>
+                                    <button className="btn btn-sm btn-danger" onClick={() => handleShowDeleteModal(cliente)}>Eliminar</button>
+
                                 </td>
                             </tr>
                         ))}
@@ -166,6 +222,30 @@ function Clientes() {
                     handleClose={handleCloseEditModal}
                     clienteToEdit={editingCliente}
                     onClienteUpdated={handleClienteUpdated}
+                />
+            )}
+            {/* Renderizar el componente Modal Confirmación Eliminar */}
+            {/* Solo se renderiza si hay un cliente seleccionado para eliminar */}
+            {deletingCliente && (
+                <ConfirmationModal
+                    show={showDeleteModal}
+                    handleClose={handleCloseDeleteModal}
+                    handleConfirm={handleConfirmDelete}
+                    title="Confirmar Eliminación"
+                    body={
+                        <>
+                            <p>¿Estás seguro de que deseas eliminar al cliente?</p>
+                            <p><strong>ID:</strong> {deletingCliente.id}<br />
+                                <strong>Nombre:</strong> {deletingCliente.nombre} {deletingCliente.apellido || ''}<br />
+                                <strong>Email:</strong> {deletingCliente.email}
+                            </p>
+                            {/* Mostrar error de eliminación si existe */}
+                            {deleteError && <div className="alert alert-danger mt-3">{deleteError}</div>}
+                        </>
+                    }
+                    confirmButtonText="Eliminar"
+                    confirmButtonVariant="danger"
+                    isConfirming={isDeleting} // Pasar estado de carga
                 />
             )}
         </div>
