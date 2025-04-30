@@ -1,10 +1,9 @@
 // frontend/src/pages/Productos.jsx
 import React, { useState, useEffect } from 'react';
 import apiClient from '../api'; // Nuestro cliente Axios
-// Importaremos los modales más adelante
 import AddProductoModal from '../components/AddProductoModal';
-// import EditProductoModal from '../components/EditProductoModal';
-// import ConfirmationModal from '../components/ConfirmationModal';
+import EditProductoModal from '../components/EditProductoModal';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 function Productos() {
     const [productos, setProductos] = useState([]);
@@ -13,8 +12,8 @@ function Productos() {
 
     // Estados para los modales (los configuraremos luego)
     const [showAddModal, setShowAddModal] = useState(false);
-    // const [showEditModal, setShowEditModal] = useState(false);
-    // const [editingProducto, setEditingProducto] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editingProducto, setEditingProducto] = useState(null);
     // const [showDeleteModal, setShowDeleteModal] = useState(false);
     // const [deletingProducto, setDeletingProducto] = useState(null);
     // const [isDeleting, setIsDeleting] = useState(false);
@@ -44,6 +43,25 @@ function Productos() {
     // Función para actualizar la lista después de añadir un producto
     const handleProductoAdded = (newProducto) => { // <-- Añadir
         setProductos(prevProductos => [newProducto, ...prevProductos]);
+    };
+
+    // Función para abrir el modal de edición
+    const handleShowEditModal = (producto) => { // <-- Añadir
+        setEditingProducto(producto);
+        setShowEditModal(true);
+    };
+
+    // Función para cerrar el modal de edición
+    const handleCloseEditModal = () => { // <-- Añadir
+        setShowEditModal(false);
+        setEditingProducto(null);
+    };
+
+    // Función para actualizar la lista después de editar
+    const handleProductoUpdated = (updatedProducto) => { // <-- Añadir
+        setProductos(prevProductos =>
+            prevProductos.map(p => (p.id === updatedProducto.id ? updatedProducto : p))
+        );
     };
 
     // useEffect para cargar los productos al montar
@@ -91,7 +109,7 @@ function Productos() {
 
             {/* Botón para añadir producto (lo implementaremos más tarde) */}
             <div className="mb-3">
-                <button className="btn btn-success"onClick={handleShowAddModal} > + Añadir Producto </button>
+                <button className="btn btn-success" onClick={handleShowAddModal} > + Añadir Producto </button>
             </div>
 
             {/* Tabla de Productos */}
@@ -119,7 +137,7 @@ function Productos() {
                                 <td>{producto.precio.toFixed(2)}</td>
                                 <td>{producto.stock ?? '-'}</td> {/* Mostrar '-' si stock es null/undefined */}
                                 <td>
-                                    <button className="btn btn-sm btn-warning me-2" >Editar</button>
+                                    <button className="btn btn-sm btn-warning me-2" onClick={() => handleShowEditModal(producto)} >Editar</button>
                                     <button className="btn btn-sm btn-danger" disabled>Eliminar</button>
                                 </td>
                             </tr>
@@ -134,7 +152,16 @@ function Productos() {
                 handleClose={handleCloseAddModal}
                 onProductoAdded={handleProductoAdded}
             />
-            {/* <EditProductoModal ... /> */}
+            {/* ... (AddProductoModal) ... */}
+            {/* Renderizar el componente Modal Editar */}
+            {editingProducto && (
+                <EditProductoModal
+                    show={showEditModal}
+                    handleClose={handleCloseEditModal}
+                    productoToEdit={editingProducto}
+                    onProductoUpdated={handleProductoUpdated}
+                />
+            )}
             {/* <ConfirmationModal ... /> */}
 
         </div>
