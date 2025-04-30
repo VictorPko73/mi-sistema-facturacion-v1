@@ -1,13 +1,17 @@
 // frontend/src/pages/Clientes.jsx
 import React, { useState, useEffect } from 'react';
 import apiClient from '../api';
-// import { Link } from 'react-router-dom'; // Ya no lo usamos aquí directamente
-import AddClienteModal from '../components/AddClienteModal'; // <-- Importar el modal
+import AddClienteModal from '../components/AddClienteModal'; // <-- Importar el modal añadir cliente
+import EditClienteModal from '../components/EditClienteModal'; // <-- Añadir el modal modificar cliente
+
 
 function Clientes() {
     const [clientes, setClientes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    // Estados para el modal de edición
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editingCliente, setEditingCliente] = useState(null); // Guarda el cliente a editar
 
     // Estado para controlar la visibilidad del modal
     const [showAddModal, setShowAddModal] = useState(false);
@@ -21,6 +25,27 @@ function Clientes() {
     const handleClienteAdded = (newCliente) => {
         // Añadir el nuevo cliente al principio de la lista existente
         setClientes(prevClientes => [newCliente, ...prevClientes]);
+        // Opcionalmente, podrías volver a cargar toda la lista: fetchClientes();
+    };
+
+    // Función para abrir el modal de edición y pasarle el cliente
+    const handleShowEditModal = (cliente) => {
+        setEditingCliente(cliente); // Guarda el cliente seleccionado
+        setShowEditModal(true);     // Abre el modal
+    };
+
+    // Función para cerrar el modal de edición
+    const handleCloseEditModal = () => {
+        setShowEditModal(false);
+        setEditingCliente(null); // Limpia el cliente seleccionado al cerrar
+    };
+
+    // Función para actualizar la lista después de editar un cliente
+    const handleClienteUpdated = (updatedCliente) => {
+        // Reemplaza el cliente antiguo con el actualizado en la lista
+        setClientes(prevClientes =>
+            prevClientes.map(c => (c.id === updatedCliente.id ? updatedCliente : c))
+        );
         // Opcionalmente, podrías volver a cargar toda la lista: fetchClientes();
     };
 
@@ -118,7 +143,7 @@ function Clientes() {
                                 <td>{cliente.email}</td>
                                 <td>{cliente.telefono || '-'}</td>
                                 <td>
-                                    <button className="btn btn-sm btn-warning me-2" disabled>Editar</button>
+                                    <button className="btn btn-sm btn-warning me-2" onClick={() => handleShowEditModal(cliente)}>Editar</button>
                                     <button className="btn btn-sm btn-danger" disabled>Eliminar</button>
                                 </td>
                             </tr>
@@ -133,6 +158,16 @@ function Clientes() {
                 handleClose={handleCloseAddModal}
                 onClienteAdded={handleClienteAdded}
             />
+            {/* Renderizar el componente Modal Editar */}
+            {/* Solo se renderiza si hay un cliente seleccionado para editar */}
+            {editingCliente && (
+                <EditClienteModal
+                    show={showEditModal}
+                    handleClose={handleCloseEditModal}
+                    clienteToEdit={editingCliente}
+                    onClienteUpdated={handleClienteUpdated}
+                />
+            )}
         </div>
     );
 }
