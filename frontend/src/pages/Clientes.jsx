@@ -69,37 +69,36 @@ function Clientes() {
     };
 
     // Función que se ejecuta al confirmar la eliminación en el modal
+    // Función que se ejecuta al confirmar la eliminación en el modal
     const handleConfirmDelete = async () => {
-        if (!deletingCliente) return; // Seguridad
+        if (!deletingCliente) return;
 
-        setIsDeleting(true); // Indicar que la eliminación está en proceso
-        setDeleteError(null); // Limpiar errores
+        setIsDeleting(true);
+        setDeleteError(null); // Limpiar error previo
 
         try {
-            // Petición DELETE a la API
+            // Petición DELETE
             const response = await apiClient.delete(`/clientes/${deletingCliente.id}`);
 
-            if (response.status === 200 || response.status === 204) { // 200 OK o 204 No Content
-                // Eliminar el cliente de la lista en el estado local
+            if (response.status === 200 || response.status === 204) {
+                // Éxito: actualizar lista y cerrar modal
                 setClientes(prevClientes =>
                     prevClientes.filter(c => c.id !== deletingCliente.id)
                 );
-                handleCloseDeleteModal(); // Cerrar el modal
+                handleCloseDeleteModal();
             } else {
                 setDeleteError('Respuesta inesperada del servidor al eliminar.');
             }
-        } catch (err) {
+        } catch (err) { // <-- ¡VERIFICA ESTE BLOQUE!
             console.error("Error al eliminar cliente:", err);
-            // Intentar mostrar error específico (ej: si tiene facturas asociadas y hay restricción)
-            const errorMessage = err.response?.data?.error || err.message || "Ocurrió un error al eliminar el cliente.";
-            setDeleteError(errorMessage);
-            // No cerramos el modal si hay error, para que el usuario vea el mensaje
+            const errorMessage = err.response?.data?.error // Obtener error del backend
+                || err.message
+                || "Ocurrió un error al eliminar el cliente.";
+            setDeleteError(errorMessage); // <-- ¡Actualizar estado del error!
+            // NO cerrar el modal si hay error
         } finally {
-            setIsDeleting(false); // Indicar que la eliminación ha terminado
-            // Limpiamos deletingCliente aquí, después de usarlo
-            if (!deleteError) { // Solo si no hubo error
-                setDeletingCliente(null);
-            }
+            setIsDeleting(false);
+            // No limpiar deletingCliente si hubo error, para mantener info en modal
         }
     };
 
@@ -232,20 +231,26 @@ function Clientes() {
                     handleClose={handleCloseDeleteModal}
                     handleConfirm={handleConfirmDelete}
                     title="Confirmar Eliminación"
-                    body={
+                    body={ // <-- Verifica el cuerpo del modal
                         <>
                             <p>¿Estás seguro de que deseas eliminar al cliente?</p>
-                            <p><strong>ID:</strong> {deletingCliente.id}<br />
-                                <strong>Nombre:</strong> {deletingCliente.nombre} {deletingCliente.apellido || ''}<br />
-                                <strong>Email:</strong> {deletingCliente.email}
+                            <p>
+                                <strong>ID:</strong> {deletingCliente.id}<br />
+                                <strong>Nombre:</strong> {deletingCliente.nombre}<br />
+                                <strong>Email:</strong> {deletingCliente.email || 'N/A'}
                             </p>
-                            {/* Mostrar error de eliminación si existe */}
-                            {deleteError && <div className="alert alert-danger mt-3">{deleteError}</div>}
+                            {/* --- ¡AQUÍ SE MUESTRA EL ERROR! --- */}
+                            {deleteError && (
+                                <div className="alert alert-danger mt-3">
+                                    {deleteError}
+                                </div>
+                            )}
+                            {/* --- FIN SECCIÓN ERROR --- */}
                         </>
                     }
                     confirmButtonText="Eliminar"
                     confirmButtonVariant="danger"
-                    isConfirming={isDeleting} // Pasar estado de carga
+                    isConfirming={isDeleting}
                 />
             )}
         </div>

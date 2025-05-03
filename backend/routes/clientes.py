@@ -1,7 +1,8 @@
 # backend/routes/clientes.py
 
 from flask import Blueprint, request, jsonify
-from models import db, Cliente # Importar db y el modelo Cliente
+from models import db, Cliente, Factura # Importar db, el modelo Cliente y Factura
+from sqlalchemy.exc import IntegrityError
 
 # Crear un Blueprint para las rutas de clientes
 # El primer argumento 'clientes' es el nombre del Blueprint.
@@ -125,23 +126,26 @@ def update_cliente(id):
 # [DELETE] Eliminar un cliente por ID
 @clientes_bp.route('/<int:id>', methods=['DELETE'])
 def delete_cliente(id):
+    cliente = Cliente.query.get(id)
+    if cliente is None:
+        return jsonify({"error": "Cliente no encontrado"}), 404
+
     try:
-        cliente = Cliente.query.get(id)
-        if not cliente:
-            return jsonify({"error": "Cliente no encontrado"}), 404
-
-        # Considerar qué pasa con las facturas asociadas.
-        # Por ahora, SQLAlchemy podría dar error si hay facturas (debido a la ForeignKey).
-        # Se podría borrar en cascada (configurado en el modelo) o impedir el borrado si tiene facturas.
-        # Vamos a asumir que queremos borrarlo (si el modelo lo permite con cascade)
-        # o que no tiene facturas.
-
+        # Intenta eliminar y confirmar
         db.session.delete(cliente)
         db.session.commit()
-        return jsonify({"message": "Cliente eliminado correctamente"}), 200 # O 204 No Content
+        return '', 204 # Éxito, sin contenido
+
+    except IntegrityError: # <-- ¡LA CLAVE!
+        # Error de integridad (probablemente clave foránea con Factura)
+        db.session.rollback() # Deshacer transacción fallida
+        # Devolver mensaje específico y código 409 Conflict
+        return jsonify({
+            "error": "No se puede eliminar el cliente porque está asociado a una o más facturas."
+        }), 409
+
     except Exception as e:
+        # Otros errores inesperados
         db.session.rollback()
-        # Podría ser un error de integridad si tiene facturas y no hay cascade delete
-        if 'FOREIGN KEY constraint failed' in str(e):
-            return jsonify({"error": "No se puede eliminar el cliente porque tiene facturas asociadas"}), 409
-        return jsonify({"error": "Error al eliminar el cliente", "details": str(e)}), 500
+        print(f"Error inesperado al eliminar cliente {id}: {e}")
+        return jsonify({"error": "Ocurrió un error inesperado en el servidor"}), 500

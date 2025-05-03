@@ -14,10 +14,10 @@ function Productos() {
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [editingProducto, setEditingProducto] = useState(null);
-    // const [showDeleteModal, setShowDeleteModal] = useState(false);
-    // const [deletingProducto, setDeletingProducto] = useState(null);
-    // const [isDeleting, setIsDeleting] = useState(false);
-    // const [deleteError, setDeleteError] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deletingProducto, setDeletingProducto] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [deleteError, setDeleteError] = useState(null);
 
     // Función para cargar productos
     const fetchProductos = async () => {
@@ -62,6 +62,66 @@ function Productos() {
         setProductos(prevProductos =>
             prevProductos.map(p => (p.id === updatedProducto.id ? updatedProducto : p))
         );
+    };
+
+    // Función para abrir el modal de confirmación de eliminación
+    const handleShowDeleteModal = (producto) => { // <-- Añadir
+        setDeletingProducto(producto);
+        setDeleteError(null);
+        setShowDeleteModal(true);
+    };
+
+    // Función para cerrar el modal de confirmación
+    const handleCloseDeleteModal = () => { // <-- Añadir
+        setShowDeleteModal(false);
+        // No limpiamos deletingProducto aquí todavía
+    };
+
+    // Función que se ejecuta al confirmar la eliminación
+    // Función que se ejecuta al confirmar la eliminación
+    const handleConfirmDelete = async () => {
+        if (!deletingProducto) return;
+
+        setIsDeleting(true);
+        setDeleteError(null); // Limpiar error anterior al intentar de nuevo
+
+        try {
+            // Petición DELETE a la API
+            const response = await apiClient.delete(`/productos/${deletingProducto.id}`);
+
+            // Si la respuesta es exitosa (200 o 204 No Content)
+            if (response.status === 200 || response.status === 204) {
+                // Eliminar el producto de la lista local
+                setProductos(prevProductos =>
+                    prevProductos.filter(p => p.id !== deletingProducto.id)
+                );
+                handleCloseDeleteModal(); // Cerrar modal SOLO si tiene éxito
+            } else {
+                // Caso improbable si la API devuelve éxito pero no 200/204
+                setDeleteError('Respuesta inesperada del servidor al eliminar.');
+            }
+        } catch (err) { // <-- ¡AQUÍ ESTÁ LA CLAVE!
+            console.error("Error al eliminar producto:", err); // Mantenemos el log de consola
+
+            // Extraer el mensaje de error específico del backend si existe
+            const errorMessage = err.response?.data?.error // <-- Intenta obtener el JSON {"error": "..."}
+                || err.message             // <-- Si no, usa el mensaje general de Axios
+                || "Ocurrió un error al eliminar el producto."; // <-- Último recurso
+
+            // ¡Actualizar el estado para mostrar el error en el modal!
+            setDeleteError(errorMessage);
+
+            // ¡IMPORTANTE! NO cerramos el modal aquí si hay error
+        } finally {
+            // Dejar de mostrar el indicador de "eliminando..."
+            setIsDeleting(false);
+            // Limpiar el producto a eliminar SOLO si NO hubo error
+            // Si hubo error, lo mantenemos para que el modal siga mostrándolo
+            // (El usuario puede intentar de nuevo o cancelar)
+            // if (!deleteError) { // Esta línea podría estar o no, pero el efecto es el mismo
+            //     setDeletingProducto(null);
+            // }
+        }
     };
 
     // useEffect para cargar los productos al montar
@@ -138,7 +198,7 @@ function Productos() {
                                 <td>{producto.stock ?? '-'}</td> {/* Mostrar '-' si stock es null/undefined */}
                                 <td>
                                     <button className="btn btn-sm btn-warning me-2" onClick={() => handleShowEditModal(producto)} >Editar</button>
-                                    <button className="btn btn-sm btn-danger" disabled>Eliminar</button>
+                                    <button className="btn btn-sm btn-danger" onClick={() => handleShowDeleteModal(producto)}>Eliminar</button>
                                 </td>
                             </tr>
                         ))}
@@ -162,7 +222,35 @@ function Productos() {
                     onProductoUpdated={handleProductoUpdated}
                 />
             )}
-            {/* <ConfirmationModal ... /> */}
+            {/* Renderizar el componente Modal Confirmación Eliminar */}
+            {deletingProducto && (
+                <ConfirmationModal
+                    show={showDeleteModal}
+                    handleClose={handleCloseDeleteModal}
+                    handleConfirm={handleConfirmDelete}
+                    title="Confirmar Eliminación"
+                    body={ // <-- El cuerpo del modal
+                        <> {/* Usamos fragmento para agrupar */}
+                            <p>¿Estás seguro de que deseas eliminar el producto?</p>
+                            <p>
+                                <strong>ID:</strong> {deletingProducto.id}<br />
+                                <strong>Nombre:</strong> {deletingProducto.nombre}<br />
+                                <strong>Precio:</strong> {deletingProducto.precio ? deletingProducto.precio.toFixed(2) + ' €' : 'N/A'}
+                            </p>
+                            {/* --- ¡AQUÍ SE MUESTRA EL ERROR EN PANTALLA! --- */}
+                            {deleteError && (
+                                <div className="alert alert-danger mt-3">
+                                    {deleteError}
+                                </div>
+                            )}
+                            {/* --- FIN DE LA SECCIÓN DE ERROR --- */}
+                        </>
+                    }
+                    confirmButtonText="Eliminar"
+                    confirmButtonVariant="danger"
+                    isConfirming={isDeleting} // Para deshabilitar botón mientras se procesa
+                />
+            )}
 
         </div>
     );
