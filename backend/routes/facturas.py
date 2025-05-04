@@ -16,23 +16,29 @@ IVA_RATE = Decimal('0.21')
 @facturas_bp.route('/', methods=['GET'])
 def get_facturas():
     try:
-        facturas = Factura.query.order_by(Factura.fecha.desc()).all()
+        # Consulta con join para obtener el nombre del cliente
+        facturas_query = db.session.query(Factura, Cliente.nombre, Cliente.apellido)\
+                        .join(Cliente, Factura.cliente_id == Cliente.id)\
+                        .order_by(Factura.fecha.desc())\
+                        .all()
+
         facturas_list = []
-        for f in facturas:
-            # Obtener nombre del cliente (manejar si el cliente fue borrado)
-            nombre_cliente = f.cliente.nombre + " " + (f.cliente.apellido or "") if f.cliente else "Cliente no encontrado"
+        for factura, cliente_nombre, cliente_apellido in facturas_query:
+            nombre_completo = f"{cliente_nombre} {cliente_apellido}".strip() if cliente_nombre or cliente_apellido else cliente_nombre
             facturas_list.append({
-                "id": f.id,
-                "fecha": f.fecha.isoformat(), # Formato estándar ISO 8601
-                "cliente_id": f.cliente_id,
-                "nombre_cliente": nombre_cliente, # Añadir nombre para conveniencia
-                "subtotal": float(f.subtotal), # Convertir Decimal a float para JSON
-                "iva": float(f.iva),
-                "total": float(f.total)
+                "id": factura.id,
+                "fecha": factura.fecha.isoformat() if factura.fecha else None,
+                "cliente_id": factura.cliente_id,
+                "cliente_nombre_completo": nombre_completo, # Incluir el nombre del cliente
+                "total": factura.total
+                # Puedes añadir más campos si los necesitas
             })
+
         return jsonify(facturas_list), 200
     except Exception as e:
-        return jsonify({"error": "Error al obtener las facturas", "details": str(e)}), 500
+        print(f"Error al obtener facturas: {e}")
+        # Considera loggear el error completo: logging.exception("Error al obtener facturas")
+        return jsonify({"error": "Error interno al obtener las facturas"}), 500
 
 # [GET] Obtener una factura específica por ID (con detalles)
 @facturas_bp.route('/<int:id>', methods=['GET'])

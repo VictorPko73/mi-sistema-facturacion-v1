@@ -1,11 +1,7 @@
 // frontend/src/pages/Facturas.jsx
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Para enlaces futuros a detalles
-import apiClient from '../api';
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
-import Spinner from 'react-bootstrap/Spinner'; // Para indicador de carga
+import apiClient from '../api'; // Nuestro cliente Axios
+import { Link } from 'react-router-dom'; // Para enlaces futuros
 
 function Facturas() {
     const [facturas, setFacturas] = useState([]);
@@ -14,115 +10,110 @@ function Facturas() {
 
     // Función para formatear fecha (puedes moverla a un archivo utils si la usas más)
     const formatDate = (dateString) => {
-        if (!dateString) return 'N/A';
+        if (!dateString) return '-';
         try {
             const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
             return new Date(dateString).toLocaleDateString(undefined, options);
         } catch (e) {
             console.error("Error formatting date:", e);
-            return dateString; // Devuelve el original si falla
+            return dateString; // Devuelve el string original si falla
         }
     };
 
-    // Función para formatear moneda
-    const formatCurrency = (amount) => {
-        if (typeof amount !== 'number') return 'N/A';
-        return amount.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
-    };
-
-
-    useEffect(() => {
-        const fetchFacturas = async () => {
+    // Función para cargar facturas
+    const fetchFacturas = async () => {
+        try {
             setLoading(true);
             setError(null);
-            try {
-                const response = await apiClient.get('/facturas');
-                // Asegúrate que la respuesta es un array
-                if (Array.isArray(response.data)) {
-                    setFacturas(response.data);
-                } else {
-                    console.error("La respuesta de la API no es un array:", response.data);
-                    setError("Error: La respuesta del servidor no tiene el formato esperado.");
-                    setFacturas([]); // Establecer a array vacío en caso de formato incorrecto
-                }
+            // Asumimos que el backend devuelve el nombre del cliente en la respuesta
+            const response = await apiClient.get('/facturas/');
+            setFacturas(response.data);
+        } catch (err) {
+            console.error("Error fetching facturas:", err);
+            const errorMessage = err.response?.data?.error || err.message || "Ocurrió un error al cargar las facturas.";
+            setError(errorMessage);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-            } catch (err) {
-                console.error("Error fetching facturas:", err);
-                const message = err.response?.data?.error || err.message || "Ocurrió un error al cargar las facturas.";
-                setError(message);
-                setFacturas([]); // Asegurar que sea un array vacío en caso de error
-            } finally {
-                setLoading(false);
-            }
-        };
-
+    // useEffect para cargar las facturas al montar
+    useEffect(() => {
         fetchFacturas();
-    }, []); // Se ejecuta solo una vez al montar el componente
+    }, []);
 
+    // --- Renderizado Condicional ---
+    if (loading) {
+        return (
+            <div className="container mt-4">
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error && facturas.length === 0) {
+        return (
+            <div className="container mt-4">
+                <div className="alert alert-danger" role="alert">
+                    <strong>Error:</strong> {error}
+                </div>
+                <button className="btn btn-primary me-2" onClick={fetchFacturas}>Reintentar Carga</button>
+                {/* En el futuro, este botón llevará a la página de creación */}
+                <button className="btn btn-success" disabled>+ Crear Nueva Factura</button>
+            </div>
+        );
+    }
+
+    // --- Renderizado Principal ---
     return (
         <div className="container mt-4">
-            <h3 className="mb-3">Listado de Facturas</h3>
+            <h1 className="mb-3">Gestión de Facturas</h1>
 
-            {/* Botón para ir a crear nueva factura (lo implementaremos después) */}
-            <Button variant="primary" className="mb-3" disabled>
-                Crear Nueva Factura
-            </Button>
-
-            {/* Manejo de estados de carga y error */}
-            {loading && (
-                <div className="text-center">
-                    <Spinner animation="border" role="status">
-                        <span className="visually-hidden">Cargando...</span>
-                    </Spinner>
-                    <p>Cargando facturas...</p>
+            {error && facturas.length > 0 && (
+                <div className="alert alert-warning" role="alert">
+                    <strong>Aviso:</strong> No se pudo actualizar la lista. {error}
                 </div>
             )}
 
-            {error && (
-                <Alert variant="danger">
-                    Error al cargar facturas: {error}
-                </Alert>
-            )}
+            <div className="mb-3">
+                {/* En el futuro, este botón llevará a la página de creación */}
+                <button className="btn btn-success" disabled>+ Crear Nueva Factura</button>
+            </div>
 
-            {/* Tabla de facturas (solo si no hay carga y no hay error grave inicial) */}
-            {!loading && !error && (
-                <Table striped bordered hover responsive>
-                    <thead>
+            {facturas.length === 0 && !loading ? (
+                <p>No hay facturas registradas.</p>
+            ) : (
+                <table className="table table-striped table-hover table-bordered">
+                    <thead className="table-dark">
                         <tr>
                             <th>ID</th>
                             <th>Fecha</th>
                             <th>Cliente</th>
-                            <th>Total</th>
+                            <th>Total (€)</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {facturas.length > 0 ? (
-                            facturas.map((factura) => (
-                                <tr key={factura.id}>
-                                    <td>{factura.id}</td>
-                                    <td>{formatDate(factura.fecha)}</td>
-                                    {/* Mostramos el nombre del cliente */}
-                                    <td>{factura.cliente ? `${factura.cliente.nombre} (ID: ${factura.cliente.id})` : 'Cliente no disponible'}</td>
-                                    {/* Mostramos el total calculado */}
-                                    <td>{formatCurrency(factura.total)}</td>
-                                    <td>
-                                        {/* Botones de acciones (los habilitaremos después) */}
-                                        <Button variant="info" size="sm" className="me-2" disabled>Ver Detalles</Button>
-                                        <Button variant="danger" size="sm" disabled>Eliminar</Button>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="5" className="text-center">No hay facturas registradas.</td>
+                        {facturas.map((factura) => (
+                            <tr key={factura.id}>
+                                <td>{factura.id}</td>
+                                <td>{formatDate(factura.fecha)}</td>
+                                {/* Asumimos que el backend incluye 'cliente_nombre' */}
+                                <td>{factura.cliente_nombre_completo || `ID: ${factura.cliente_id}`}</td>
+                                <td>{factura.total?.toFixed(2) ?? '0.00'}</td>
+                                <td>
+                                    {/* En el futuro, estos botones tendrán funcionalidad */}
+                                    <button className="btn btn-sm btn-info me-2" disabled>Ver Detalles</button>
+                                    <button className="btn btn-sm btn-danger" disabled>Eliminar</button>
+                                </td>
                             </tr>
-                        )}
+                        ))}
                     </tbody>
-                </Table>
-            )}
-            {!loading && !error && facturas.length === 0 && (
-                <Alert variant="info">No se encontraron facturas.</Alert>
+                </table>
             )}
         </div>
     );
