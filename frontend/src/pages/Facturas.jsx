@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import apiClient from '../api'; // Nuestro cliente Axios
 import { Link } from 'react-router-dom'; // Para enlaces futuros
 
+
 function Facturas() {
     const [facturas, setFacturas] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -37,85 +38,69 @@ function Facturas() {
         }
     };
 
+    
+
     // useEffect para cargar las facturas al montar
     useEffect(() => {
         fetchFacturas();
     }, []);
 
-    // --- Renderizado Condicional ---
-    if (loading) {
-        return (
-            <div className="container mt-4">
-                <div className="d-flex justify-content-center">
-                    <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Cargando...</span>
-                    </div>
-                </div>
-            </div>
-        );
-    }
 
-    if (error && facturas.length === 0) {
-        return (
-            <div className="container mt-4">
-                <div className="alert alert-danger" role="alert">
-                    <strong>Error:</strong> {error}
-                </div>
-                <button className="btn btn-primary me-2" onClick={fetchFacturas}>Reintentar Carga</button>
-                {/* En el futuro, este botón llevará a la página de creación */}
-                <button className="btn btn-success" disabled>+ Crear Nueva Factura</button>
-            </div>
-        );
-    }
 
     // --- Renderizado Principal ---
     return (
         <div className="container mt-4">
             <h1 className="mb-3">Gestión de Facturas</h1>
 
-            {error && facturas.length > 0 && (
-                <div className="alert alert-warning" role="alert">
-                    <strong>Aviso:</strong> No se pudo actualizar la lista. {error}
-                </div>
-            )}
+            {error && <div className="alert alert-danger"><strong>Error:</strong> {error}</div>}
 
             <div className="mb-3">
-                {/* Modifica el botón para que sea un Link */}
                 <Link to="/facturas/nueva" className="btn btn-success">
                     + Crear Nueva Factura
                 </Link>
             </div>
 
-            {facturas.length === 0 && !loading ? (
+            {loading ? (
+                <div className="text-center">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            ) : facturas.length === 0 ? (
                 <p>No hay facturas registradas.</p>
             ) : (
-                <table className="table table-striped table-hover table-bordered">
-                    <thead className="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Fecha</th>
-                            <th>Cliente</th>
-                            <th>Total (€)</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {facturas.map((factura) => (
-                            <tr key={factura.id}>
-                                <td>{factura.id}</td>
-                                <td>{formatDate(factura.fecha)}</td>
-                                {/* Asumimos que el backend incluye 'cliente_nombre' */}
-                                <td>{factura.cliente_nombre_completo || `ID: ${factura.cliente_id}`}</td>
-                                <td>{factura.total?.toFixed(2) ?? '0.00'}</td>
-                                <td>
-                                    {/* En el futuro, estos botones tendrán funcionalidad */}
-                                    <button className="btn btn-sm btn-info me-2" disabled>Ver Detalles</button>
-                                    <button className="btn btn-sm btn-danger" disabled>Eliminar</button>
-                                </td>
+                <div className="table-responsive">
+                    <table className="table table-striped table-hover table-bordered">
+                        <thead className="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th className="text-end">Total (€)</th> {/* Alineado a la derecha */}
+                                <th className="text-center">Acciones</th> {/* Centrado */}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {facturas.map((factura) => (
+                                <tr key={factura.id}>
+                                    <td>{factura.id}</td>
+                                    <td>{formatDate(factura.fecha)}</td>
+                                    <td>{factura.cliente_nombre_completo || `ID: ${factura.cliente_id}`}</td>
+                                    <td className="text-end">{factura.total?.toFixed(2) ?? '0.00'}</td>
+                                    <td className="text-center">
+                                        {/* Cambia el botón a un Link */}
+                                        <Link to={`/facturas/${factura.id}`} className="btn btn-sm btn-info me-2" title="Ver Detalles">
+                                            Ver Detalles
+                                        </Link>
+                                        <button className="btn btn-sm btn-danger" disabled title="Eliminar (Próximamente)">
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );
