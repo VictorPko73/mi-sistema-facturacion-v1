@@ -80,8 +80,10 @@ function Facturas() {
             )}
 
             <div className="mb-3">
-                {/* En el futuro, este botón llevará a la página de creación */}
-                <button className="btn btn-success" disabled>+ Crear Nueva Factura</button>
+                {/* Modifica el botón para que sea un Link */}
+                <Link to="/facturas/nueva" className="btn btn-success">
+                    + Crear Nueva Factura
+                </Link>
             </div>
 
             {facturas.length === 0 && !loading ? (

@@ -5,6 +5,7 @@ import Clientes from './pages/Clientes';
 import Productos from './pages/Productos';
 import Facturas from './pages/Facturas';
 import Navbar from './components/Navbar'; // Importar Navbar
+import CrearFactura from './pages/CrearFactura';
 
 import './App.css';
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/clientes" element={<Clientes />} /> {/* Ruta para clientes */}
           <Route path="/productos" element={<Productos />} /> {/* Ruta para productos */}
           <Route path="/facturas" element={<Facturas />} /> {/* Ruta para facturas */}
+          <Route path="/facturas/nueva" element={<CrearFactura />}/>
           {/* Más adelante podríamos añadir rutas para editar/ver específicos, ej: /clientes/:id */}
         </Routes>
       </div>
