@@ -198,7 +198,7 @@ function CrearFactura() {
 
                 {/* Sección Detalles de Factura */}
                 <h4 className="mt-4">Detalles de la Factura</h4>
-                <div className="table-responsive">
+                <div className="table">
                     <table className="table table-bordered align-middle"> {/* align-middle para centrar verticalmente */}
                         <thead className="table-light">
                             <tr>

@@ -1,31 +1,42 @@
 // frontend/src/components/ConfirmationModal.jsx
 import React from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { Modal, Button, Alert } from 'react-bootstrap'; // Importa Alert
 
 function ConfirmationModal({
     show,
-    handleClose,
-    handleConfirm,
+    onHide, // Renombrado desde handleClose
+    onConfirm, // Renombrado desde handleConfirm
     title,
-    body,
-    confirmButtonText = 'Confirmar', // Texto por defecto
-    confirmButtonVariant = 'danger', // Variante por defecto (para acciones destructivas)
-    isConfirming = false // Para deshabilitar botones durante la acción
+    message, // Renombrado desde body
+    confirmButtonText = 'Confirmar',
+    cancelButtonText = 'Cancelar', // Añadido prop para texto del botón cancelar
+    confirmVariant = 'danger', // Renombrado desde confirmButtonVariant
+    errorMessage = null, // Añadido prop para mensaje de error
+    // Mantenemos isConfirming por si se quiere añadir un estado de carga en el futuro
+    isConfirming = false
 }) {
     return (
-        <Modal show={show} onHide={handleClose} centered> {/* 'centered' para mejor visibilidad */}
+        <Modal show={show} onHide={onHide} centered> {/* Usar onHide */}
             <Modal.Header closeButton>
-                <Modal.Title>{title || 'Confirmación'}</Modal.Title> {/* Título por defecto */}
+                <Modal.Title>{title || 'Confirmación'}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {body || '¿Estás seguro de que deseas realizar esta acción?'} {/* Cuerpo por defecto */}
+                {/* Mostrar mensaje de error si existe */}
+                {errorMessage && (
+                    <Alert variant="danger" className="mb-3">
+                        <strong>Error:</strong> {errorMessage}
+                    </Alert>
+                )}
+                {/* Usar message */}
+                <p>{message || '¿Estás seguro de que deseas realizar esta acción?'}</p>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose} disabled={isConfirming}>
-                    Cancelar
+                {/* Usar onHide y cancelButtonText */}
+                <Button variant="secondary" onClick={onHide} disabled={isConfirming}>
+                    {cancelButtonText}
                 </Button>
-                <Button variant={confirmButtonVariant} onClick={handleConfirm} disabled={isConfirming}>
+                {/* Usar onConfirm, confirmVariant y confirmButtonText */}
+                <Button variant={confirmVariant} onClick={onConfirm} disabled={isConfirming}>
                     {isConfirming ? 'Procesando...' : confirmButtonText}
                 </Button>
             </Modal.Footer>
