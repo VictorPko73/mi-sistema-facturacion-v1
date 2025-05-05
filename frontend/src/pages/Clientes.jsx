@@ -1,259 +1,227 @@
 // frontend/src/pages/Clientes.jsx
 import React, { useState, useEffect } from 'react';
 import apiClient from '../api';
-import AddClienteModal from '../components/AddClienteModal'; // <-- Importar el modal añadir cliente
-import EditClienteModal from '../components/EditClienteModal'; // <-- Añadir el modal modificar cliente
-import ConfirmationModal from '../components/ConfirmationModal'; // <-- Añadir modal para confirmar eliminación
-
+import AddClienteModal from '../components/AddClienteModal';
+import EditClienteModal from '../components/EditClienteModal';
+import ConfirmationModal from '../components/ConfirmationModal'; // Asegúrate que este modal está actualizado
+import { Button, Alert, Spinner, Table, Container, Row, Col, Card } from 'react-bootstrap'; // Importar componentes Bootstrap
+import { PlusCircleFill, PencilSquare, TrashFill, ArrowClockwise } from 'react-bootstrap-icons'; // Importar iconos
 
 function Clientes() {
     const [clientes, setClientes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    // Estados para el modal de edición
-    const [showEditModal, setShowEditModal] = useState(false);
-    const [editingCliente, setEditingCliente] = useState(null); // Guarda el cliente a editar
-    // Estados para el modal de confirmación de eliminación
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [deletingCliente, setDeletingCliente] = useState(null); // Guarda el cliente a eliminar
-    const [isDeleting, setIsDeleting] = useState(false); // Para feedback en el botón de confirmación
-    const [deleteError, setDeleteError] = useState(null); // Para errores específicos de eliminación
-
-    // Estado para controlar la visibilidad del modal
     const [showAddModal, setShowAddModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editingCliente, setEditingCliente] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deletingCliente, setDeletingCliente] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [deleteError, setDeleteError] = useState(null);
 
-    // Función para abrir el modal
-    const handleShowAddModal = () => setShowAddModal(true);
-    // Función para cerrar el modal
-    const handleCloseAddModal = () => setShowAddModal(false);
+    // --- Funciones de Carga y Modales (Lógica sin cambios) ---
 
-    // Función para actualizar la lista después de añadir un cliente
-    const handleClienteAdded = (newCliente) => {
-        // Añadir el nuevo cliente al principio de la lista existente
-        setClientes(prevClientes => [newCliente, ...prevClientes]);
-        // Opcionalmente, podrías volver a cargar toda la lista: fetchClientes();
-    };
-
-    // Función para abrir el modal de edición y pasarle el cliente
-    const handleShowEditModal = (cliente) => {
-        setEditingCliente(cliente); // Guarda el cliente seleccionado
-        setShowEditModal(true);     // Abre el modal
-    };
-
-    // Función para cerrar el modal de edición
-    const handleCloseEditModal = () => {
-        setShowEditModal(false);
-        setEditingCliente(null); // Limpia el cliente seleccionado al cerrar
-    };
-
-    // Función para actualizar la lista después de editar un cliente
-    const handleClienteUpdated = (updatedCliente) => {
-        // Reemplaza el cliente antiguo con el actualizado en la lista
-        setClientes(prevClientes =>
-            prevClientes.map(c => (c.id === updatedCliente.id ? updatedCliente : c))
-        );
-        // Opcionalmente, podrías volver a cargar toda la lista: fetchClientes();
-    };
-
-    // Función para abrir el modal de confirmación de eliminación
-    const handleShowDeleteModal = (cliente) => {
-        setDeletingCliente(cliente); // Guarda el cliente seleccionado
-        setDeleteError(null); // Limpia errores previos de eliminación
-        setShowDeleteModal(true);     // Abre el modal
-    };
-
-    // Función para cerrar el modal de confirmación
-    const handleCloseDeleteModal = () => {
-        setShowDeleteModal(false);
-        // No limpiamos deletingCliente aquí todavía, lo necesitamos en handleConfirmDelete
-    };
-
-    // Función que se ejecuta al confirmar la eliminación en el modal
-    // Función que se ejecuta al confirmar la eliminación en el modal
-    const handleConfirmDelete = async () => {
-        if (!deletingCliente) return;
-
-        setIsDeleting(true);
-        setDeleteError(null); // Limpiar error previo
-
-        try {
-            // Petición DELETE
-            const response = await apiClient.delete(`/clientes/${deletingCliente.id}`);
-
-            if (response.status === 200 || response.status === 204) {
-                // Éxito: actualizar lista y cerrar modal
-                setClientes(prevClientes =>
-                    prevClientes.filter(c => c.id !== deletingCliente.id)
-                );
-                handleCloseDeleteModal();
-            } else {
-                setDeleteError('Respuesta inesperada del servidor al eliminar.');
-            }
-        } catch (err) { // <-- ¡VERIFICA ESTE BLOQUE!
-            console.error("Error al eliminar cliente:", err);
-            const errorMessage = err.response?.data?.error // Obtener error del backend
-                || err.message
-                || "Ocurrió un error al eliminar el cliente.";
-            setDeleteError(errorMessage); // <-- ¡Actualizar estado del error!
-            // NO cerrar el modal si hay error
-        } finally {
-            setIsDeleting(false);
-            // No limpiar deletingCliente si hubo error, para mantener info en modal
-        }
-    };
-
-    // Función para cargar clientes (la movemos fuera de useEffect para poder llamarla de nuevo si es necesario)
     const fetchClientes = async () => {
+        setLoading(true);
+        setError(null);
         try {
-            setLoading(true);
-            setError(null);
             const response = await apiClient.get('/clientes/');
-            setClientes(response.data);
+            setClientes(Array.isArray(response.data) ? response.data : []); // Asegurar que es array
         } catch (err) {
             console.error("Error fetching clientes:", err);
             const errorMessage = err.response?.data?.error || err.message || "Ocurrió un error al cargar los clientes.";
             setError(errorMessage);
+            setClientes([]); // Limpiar en caso de error
         } finally {
             setLoading(false);
         }
     };
 
-    // useEffect para cargar los clientes al montar
+    const handleShowAddModal = () => setShowAddModal(true);
+    const handleCloseAddModal = () => setShowAddModal(false);
+    const handleClienteAdded = (newCliente) => {
+        setClientes(prevClientes => [newCliente, ...prevClientes].sort((a, b) => a.id - b.id)); // Añadir y ordenar
+    };
+
+    const handleShowEditModal = (cliente) => {
+        setEditingCliente(cliente);
+        setShowEditModal(true);
+    };
+    const handleCloseEditModal = () => {
+        setShowEditModal(false);
+        setEditingCliente(null);
+    };
+    const handleClienteUpdated = (updatedCliente) => {
+        setClientes(prevClientes =>
+            prevClientes.map(c => (c.id === updatedCliente.id ? updatedCliente : c))
+        );
+    };
+
+    const handleShowDeleteModal = (cliente) => {
+        setDeletingCliente(cliente);
+        setDeleteError(null);
+        setShowDeleteModal(true);
+    };
+    const handleCloseDeleteModal = () => {
+        setShowDeleteModal(false);
+        setDeletingCliente(null);
+        setDeleteError(null);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!deletingCliente) return;
+        setIsDeleting(true);
+        setDeleteError(null);
+        try {
+            await apiClient.delete(`/clientes/${deletingCliente.id}`);
+            setClientes(prevClientes =>
+                prevClientes.filter(c => c.id !== deletingCliente.id)
+            );
+            handleCloseDeleteModal();
+        } catch (err) {
+            console.error("Error al eliminar cliente:", err);
+            const errorMessage = err.response?.data?.error || err.message || "Ocurrió un error al eliminar el cliente.";
+            setDeleteError(errorMessage);
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
     useEffect(() => {
         fetchClientes();
-    }, []); // Ejecutar solo al montar
+    }, []);
 
-    // --- Renderizado Condicional ---
-    if (loading) {
-        return (
-            <div className="container mt-4">
-                <div className="d-flex justify-content-center">
-                    <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Cargando...</span>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+    // --- Renderizado ---
 
-    if (error && clientes.length === 0) { // Mostrar error solo si no hay datos que mostrar
-        return (
-            <div className="container mt-4">
-                <div className="alert alert-danger" role="alert">
-                    <strong>Error:</strong> {error}
-                </div>
-                {/* Botón para reintentar o añadir */}
-                <button className="btn btn-primary me-2" onClick={fetchClientes}>Reintentar Carga</button>
-                <button className="btn btn-success" onClick={handleShowAddModal}>
-                    + Añadir Cliente
-                </button>
-            </div>
-        );
-    }
-
-    // --- Renderizado Principal ---
     return (
-        <div className="container mt-4">
-            <h1 className="mb-3">Gestión de Clientes</h1>
+        <Container className="mt-4 mb-5"> {/* Container para padding */}
+            {/* Encabezado con Título y Botón Añadir */}
+            <Row className="align-items-center mb-3">
+                <Col>
+                    <h1 className="mb-0">Gestión de Clientes</h1>
+                </Col>
+                <Col xs="auto">
+                    <Button variant="success" onClick={handleShowAddModal}>
+                        <PlusCircleFill className="me-2" /> Añadir Cliente
+                    </Button>
+                </Col>
+            </Row>
 
-            {/* Mostrar error de carga si ocurrió pero aún tenemos datos viejos */}
-            {error && clientes.length > 0 && (
-                <div className="alert alert-warning" role="alert">
-                    <strong>Aviso:</strong> No se pudo actualizar la lista. {error}
+            {/* Mensaje de Carga */}
+            {loading && (
+                <div className="text-center my-4">
+                    <Spinner animation="border" variant="primary" role="status">
+                        <span className="visually-hidden">Cargando...</span>
+                    </Spinner>
+                    <p className="mt-2">Cargando clientes...</p>
                 </div>
             )}
 
-
-            {/* Botón para añadir cliente */}
-            <div className="mb-3">
-                <button className="btn btn-success" onClick={handleShowAddModal}> {/* // <-- Habilitar y añadir onClick */}
-                    + Añadir Cliente
-                </button>
-            </div>
-
-            {/* Tabla de Clientes */}
-            {clientes.length === 0 && !loading ? ( // Asegurarse de no mostrar si está cargando
-                <p>No hay clientes registrados.</p>
-            ) : (
-                <table className="table table-striped table-hover table-bordered"> {/* Añadido table-bordered */}
-                    <thead className="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Email</th>
-                            <th>Teléfono</th>
-                            <th>Dirección</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {clientes.map((cliente) => (
-                            <tr key={cliente.id}>
-                                <td>{cliente.id}</td>
-                                <td>{cliente.nombre}</td>
-                                <td>{cliente.apellido || '-'}</td>
-                                <td>{cliente.email}</td>
-                                <td>{cliente.telefono || '-'}</td>
-                                <td>{cliente.direccion || '-'}</td>
-                                <td>
-                                    <button className="btn btn-sm btn-warning me-2" onClick={() => handleShowEditModal(cliente)}>Editar</button>
-                                    <button className="btn btn-sm btn-danger" onClick={() => handleShowDeleteModal(cliente)}>Eliminar</button>
-
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            {/* Mensaje de Error */}
+            {error && !loading && (
+                <Alert variant="danger" className="d-flex justify-content-between align-items-center">
+                    <span><strong>Error:</strong> {error}</span>
+                    <Button variant="outline-danger" size="sm" onClick={fetchClientes}>
+                        <ArrowClockwise className="me-1" /> Reintentar
+                    </Button>
+                </Alert>
             )}
 
-            {/* Renderizar el componente Modal */}
+            {/* Tabla de Clientes (solo si no está cargando y no hay error O si hay error pero aún hay datos) */}
+            {!loading && (clientes.length > 0 || !error) && (
+                <Card className="shadow-sm"> {/* Envolver tabla en Card */}
+                    <Card.Body>
+                        {clientes.length === 0 && !error ? (
+                            <p className="text-center text-muted mt-3">No hay clientes registrados.</p>
+                        ) : (
+                            <div className="table-responsive"> {/* Asegurar responsividad */}
+                                <Table striped bordered hover className="align-middle mb-0"> {/* align-middle */}
+                                    <thead className="table-dark">
+                                        <tr>
+                                            <th style={{ width: '5%' }}>ID</th>
+                                            <th style={{ width: '15%' }}>Nombre</th>
+                                            <th style={{ width: '15%' }}>Apellido</th>
+                                            <th style={{ width: '20%' }}>Email</th>
+                                            <th style={{ width: '15%' }}>Teléfono</th>
+                                            <th style={{ width: '20%' }}>Dirección</th>
+                                            <th style={{ width: '10%' }} className="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {/* Asegurarse que clientes es un array */}
+                                        {Array.isArray(clientes) && clientes.map((cliente) => (
+                                            <tr key={cliente?.id || Math.random()}>
+                                                <td>{cliente?.id ?? 'N/A'}</td>
+                                                <td>{cliente?.nombre ?? 'N/A'}</td>
+                                                <td>{cliente?.apellido || <span className="text-muted">-</span>}</td>
+                                                <td>{cliente?.email ?? 'N/A'}</td>
+                                                <td>{cliente?.telefono || <span className="text-muted">-</span>}</td>
+                                                <td>{cliente?.direccion || <span className="text-muted">-</span>}</td>
+                                                <td className="text-center">
+                                                    <Button
+                                                        variant="outline-warning"
+                                                        size="sm"
+                                                        className="me-2"
+                                                        onClick={() => handleShowEditModal(cliente)}
+                                                        title="Editar Cliente"
+                                                        disabled={!cliente}
+                                                    >
+                                                        <PencilSquare />
+                                                    </Button>
+                                                    <Button
+                                                        variant="outline-danger"
+                                                        size="sm"
+                                                        onClick={() => handleShowDeleteModal(cliente)}
+                                                        title="Eliminar Cliente"
+                                                        disabled={!cliente}
+                                                    >
+                                                        <TrashFill />
+                                                    </Button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </Table>
+                            </div>
+                        )}
+                    </Card.Body>
+                </Card>
+            )}
+
+            {/* --- Modales --- */}
+            {/* Asegúrate que los componentes Modal usan los props correctos */}
             <AddClienteModal
                 show={showAddModal}
-                handleClose={handleCloseAddModal}
+                handleClose={handleCloseAddModal} // O onHide si lo cambiaste
                 onClienteAdded={handleClienteAdded}
             />
-            {/* Renderizar el componente Modal Editar */}
-            {/* Solo se renderiza si hay un cliente seleccionado para editar */}
+
             {editingCliente && (
                 <EditClienteModal
                     show={showEditModal}
-                    handleClose={handleCloseEditModal}
+                    handleClose={handleCloseEditModal} // O onHide
                     clienteToEdit={editingCliente}
                     onClienteUpdated={handleClienteUpdated}
                 />
             )}
-            {/* Renderizar el componente Modal Confirmación Eliminar */}
-            {/* Solo se renderiza si hay un cliente seleccionado para eliminar */}
+
+            {/* Renderizado del ConfirmationModal con mensaje más seguro */}
             {deletingCliente && (
                 <ConfirmationModal
                     show={showDeleteModal}
-                    handleClose={handleCloseDeleteModal}
-                    handleConfirm={handleConfirmDelete}
+                    onHide={handleCloseDeleteModal} // Prop para cerrar
+                    onConfirm={handleConfirmDelete} // Prop para confirmar
                     title="Confirmar Eliminación"
-                    body={ // <-- Verifica el cuerpo del modal
-                        <>
-                            <p>¿Estás seguro de que deseas eliminar al cliente?</p>
-                            <p>
-                                <strong>ID:</strong> {deletingCliente.id}<br />
-                                <strong>Nombre:</strong> {deletingCliente.nombre}<br />
-                                <strong>Email:</strong> {deletingCliente.email || 'N/A'}
-                            </p>
-                            {/* --- ¡AQUÍ SE MUESTRA EL ERROR! --- */}
-                            {deleteError && (
-                                <div className="alert alert-danger mt-3">
-                                    {deleteError}
-                                </div>
-                            )}
-                            {/* --- FIN SECCIÓN ERROR --- */}
-                        </>
+                    message={ // Prop para el mensaje principal (más seguro)
+                        `¿Estás seguro de que deseas eliminar al cliente "${deletingCliente?.nombre ?? ''} ${deletingCliente?.apellido ?? ''}" (ID: ${deletingCliente?.id ?? 'N/A'})?`
                     }
-                    confirmButtonText="Eliminar"
-                    confirmButtonVariant="danger"
-                    isConfirming={isDeleting}
+                    confirmButtonText="Eliminar Definitivamente" // Texto botón confirmación
+                    confirmVariant="danger" // Estilo botón confirmación
+                    isConfirming={isDeleting} // Para mostrar estado de carga/deshabilitar botón
+                    errorMessage={deleteError} // Para mostrar mensaje de error
                 />
             )}
-        </div>
+        </Container>
     );
 }
 

@@ -1,190 +1,201 @@
 // frontend/src/pages/Facturas.jsx
-import React, { useState, useEffect } from 'react'; // Asegúrate que useState esté importado
-import apiClient from '../api'; // Nuestro cliente Axios
-import { Link } from 'react-router-dom'; // Para enlaces
-import { format } from 'date-fns'; // Para formatear fechas (si no lo tienes, instálalo: npm install date-fns)
-import ConfirmationModal from '../components/ConfirmationModal'; // <-- Importa el modal
+import React, { useState, useEffect } from 'react';
+import apiClient from '../api';
+import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
+import ConfirmationModal from '../components/ConfirmationModal'; // Tu modal actualizado
+import { Button, Alert, Spinner, Table, Container, Row, Col, Card } from 'react-bootstrap'; // Importar componentes Bootstrap
+import { PlusCircleFill, EyeFill, TrashFill, ArrowClockwise } from 'react-bootstrap-icons'; // Importar iconos
 
 function Facturas() {
     const [facturas, setFacturas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [deleteError, setDeleteError] = useState(null); // Estado para errores de eliminación
     const [showConfirmModal, setShowConfirmModal] = useState(false);
-    const [facturaAEliminar, setFacturaAEliminar] = useState(null); // Guarda la factura a eliminar
-    // Opcional: Estado para mensaje de éxito
-    // const [successMessage, setSuccessMessage] = useState(null);
+    const [facturaAEliminar, setFacturaAEliminar] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false); // Estado para carga de eliminación
+    const [deleteError, setDeleteError] = useState(null);
 
-    // Función para formatear fecha
+    // --- Funciones (Lógica sin cambios, solo formato de fecha) ---
+
     const formatDate = (dateString) => {
         if (!dateString) return '-';
         try {
-            // Usar date-fns para un formato consistente dd/MM/yyyy
             return format(new Date(dateString), 'dd/MM/yyyy');
         } catch (e) {
             console.error("Error formatting date:", e);
-            return dateString; // Devuelve el string original si falla
+            return dateString;
         }
     };
 
-    // Función para cargar facturas
     const fetchFacturas = async () => {
-        // No resetear loading y error aquí si se llama después de eliminar
-        // setLoading(true);
-        // setError(null);
+        setLoading(true); // Siempre poner loading al iniciar fetch
+        setError(null);
         try {
             const response = await apiClient.get('/facturas/');
-            setFacturas(response.data);
+            setFacturas(Array.isArray(response.data) ? response.data : []); // Asegurar array
         } catch (err) {
             console.error("Error fetching facturas:", err);
             const errorMessage = err.response?.data?.error || err.message || "Ocurrió un error al cargar las facturas.";
-            setError(errorMessage); // Mostrar error general de carga
+            setError(errorMessage);
+            setFacturas([]); // Limpiar en caso de error
         } finally {
-            setLoading(false); // Asegurarse que loading se quite al final
+            setLoading(false);
         }
     };
 
-    // useEffect para cargar las facturas al montar
     useEffect(() => {
-        setLoading(true); // Poner loading a true al inicio
         fetchFacturas();
     }, []);
 
-    // --- Funciones para Eliminar ---
-
-    // Abre el modal de confirmación
     const handleShowConfirmModal = (factura) => {
         setFacturaAEliminar(factura);
-        setDeleteError(null); // Limpia errores previos del modal
+        setDeleteError(null);
         setShowConfirmModal(true);
     };
 
-    // Cierra el modal
     const handleHideConfirmModal = () => {
         setShowConfirmModal(false);
         setFacturaAEliminar(null);
-        // No limpiar deleteError aquí, podría ser útil verlo fuera si se cierra
+        setDeleteError(null); // Limpiar error al cerrar
     };
 
-    // Confirma y ejecuta la eliminación
     const handleDeleteConfirm = async () => {
         if (!facturaAEliminar) return;
-
-        // Podríamos añadir un estado de carga específico para la eliminación
-        // setIsLoadingDelete(true);
-        setDeleteError(null); // Limpiar error antes de intentar
-
+        setIsDeleting(true); // Iniciar carga
+        setDeleteError(null);
         try {
-            const response = await apiClient.delete(`/facturas/${facturaAEliminar.id}`);
-
-            // El backend devuelve 204 No Content en éxito
-            if (response.status === 204) {
-                handleHideConfirmModal();
-                // Refrescar la lista de facturas para quitar la eliminada
-                // Opcional: Mostrar mensaje de éxito
-                // setSuccessMessage(`Factura #${facturaAEliminar.id} eliminada con éxito.`);
-                // setTimeout(() => setSuccessMessage(null), 3000);
-
-                // Quitar la factura del estado localmente para una respuesta más rápida
-                // O llamar a fetchFacturas() para recargar desde el servidor
-                setFacturas(prevFacturas => prevFacturas.filter(f => f.id !== facturaAEliminar.id));
-                setFacturaAEliminar(null); // Limpiar la factura seleccionada
-
-            } else {
-                // Si la API devolviera otro código (inesperado aquí)
-                throw new Error(`Respuesta inesperada del servidor: ${response.status}`);
-            }
+            await apiClient.delete(`/facturas/${facturaAEliminar.id}`);
+            setFacturas(prevFacturas => prevFacturas.filter(f => f.id !== facturaAEliminar.id));
+            handleHideConfirmModal(); // Cerrar en éxito
         } catch (err) {
             console.error(`Error deleting invoice ${facturaAEliminar.id}:`, err);
             const errorMsg = err.response?.data?.error || err.message || "Error al eliminar la factura.";
-            setDeleteError(errorMsg); // Mostrar error dentro del modal
-            // Mantener el modal abierto para que el usuario vea el error
+            setDeleteError(errorMsg);
+            // No cerrar modal en error
         } finally {
-            // setIsLoadingDelete(false);
+            setIsDeleting(false); // Finalizar carga
         }
     };
 
+    // --- Renderizado ---
 
-    // --- Renderizado Principal ---
     return (
-        <div className="container mt-4">
-            <h1 className="mb-3">Gestión de Facturas</h1>
+        <Container className="mt-4 mb-5"> {/* Container */}
+            {/* Encabezado */}
+            <Row className="align-items-center mb-3">
+                <Col>
+                    <h1 className="mb-0">Gestión de Facturas</h1>
+                </Col>
+                <Col xs="auto">
+                    <Button as={Link} to="/facturas/nueva" variant="success"> {/* Botón como Link */}
+                        <PlusCircleFill className="me-2" /> Crear Nueva Factura
+                    </Button>
+                </Col>
+            </Row>
 
-            {/* Mensaje de error general de carga */}
-            {error && !loading && <div className="alert alert-danger"><strong>Error al cargar:</strong> {error}</div>}
-            {/* Mensaje de éxito opcional */}
-            {/* {successMessage && <div className="alert alert-success">{successMessage}</div>} */}
-
-
-            <div className="mb-3">
-                <Link to="/facturas/nueva" className="btn btn-success">
-                    + Crear Nueva Factura
-                </Link>
-            </div>
-
-            {loading ? (
-                <div className="text-center">
-                    <div className="spinner-border text-primary" role="status">
+            {/* Carga */}
+            {loading && (
+                <div className="text-center my-4">
+                    <Spinner animation="border" variant="primary" role="status">
                         <span className="visually-hidden">Cargando...</span>
-                    </div>
+                    </Spinner>
+                    <p className="mt-2">Cargando facturas...</p>
                 </div>
-            ) : facturas.length === 0 && !error ? ( // Mostrar solo si no hay error y no hay facturas
-                <p>No hay facturas registradas.</p>
-            ) : !error ? ( // Mostrar tabla solo si no hay error de carga
-                <div className="table-responsive">
-                    <table className="table table-striped table-hover table-bordered">
-                        <thead className="table-dark">
-                            <tr>
-                                <th>ID</th>
-                                <th>Fecha</th>
-                                <th>Cliente</th>
-                                <th className="text-end">Total (€)</th>
-                                <th className="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {facturas.map((factura) => (
-                                <tr key={factura.id}>
-                                    <td>{factura.id}</td>
-                                    <td>{formatDate(factura.fecha)}</td>
-                                    <td>{factura.cliente_nombre_completo || `ID: ${factura.cliente_id}`}</td>
-                                    <td className="text-end">{factura.total?.toFixed(2) ?? '0.00'}</td>
-                                    <td className="text-center">
-                                        <Link to={`/facturas/${factura.id}`} className="btn btn-sm btn-info me-2" title="Ver Detalles">
-                                            Ver
-                                        </Link>
-                                        {/* Botón Eliminar funcional */}
-                                        <button
-                                            className="btn btn-sm btn-danger"
-                                            onClick={() => handleShowConfirmModal(factura)} // Llama a la función para mostrar modal
-                                            title="Eliminar Factura"
-                                        >
-                                            Eliminar
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            ) : null /* No mostrar tabla si hubo error de carga */}
+            )}
+
+            {/* Error */}
+            {error && !loading && (
+                <Alert variant="danger" className="d-flex justify-content-between align-items-center">
+                    <span><strong>Error al cargar:</strong> {error}</span>
+                    <Button variant="outline-danger" size="sm" onClick={fetchFacturas}>
+                        <ArrowClockwise className="me-1" /> Reintentar
+                    </Button>
+                </Alert>
+            )}
+
+            {/* Tabla de Facturas (solo si no carga y no hay error O si hay error pero hay datos) */}
+            {!loading && (facturas.length > 0 || !error) && (
+                <Card className="shadow-sm"> {/* Card */}
+                    <Card.Body>
+                        {facturas.length === 0 && !error ? (
+                            <p className="text-center text-muted mt-3">No hay facturas registradas.</p>
+                        ) : (
+                            <div className="table-responsive"> {/* Responsive */}
+                                <Table striped bordered hover className="align-middle mb-0"> {/* Table Bootstrap */}
+                                    <thead className="table-dark">
+                                        <tr>
+                                            <th style={{ width: '10%' }}>ID</th>
+                                            <th style={{ width: '15%' }}>Fecha</th>
+                                            <th style={{ width: '40%' }}>Cliente</th>
+                                            <th style={{ width: '20%' }} className="text-end">Total (€)</th>
+                                            <th style={{ width: '15%' }} className="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {/* Asegurar array */}
+                                        {Array.isArray(facturas) && facturas.map((factura) => (
+                                            <tr key={factura?.id || Math.random()}>
+                                                <td>{factura?.id ?? 'N/A'}</td>
+                                                <td>{formatDate(factura?.fecha)}</td>
+                                                {/* Mostrar nombre completo o ID si falta */}
+                                                <td>{factura?.cliente_nombre_completo || `Cliente ID: ${factura?.cliente_id ?? 'N/A'}`}</td>
+                                                <td className="text-end">
+                                                    {typeof factura?.total === 'number'
+                                                        ? factura.total.toFixed(2)
+                                                        : <span className="text-muted">N/A</span>
+                                                    }
+                                                </td>
+                                                <td className="text-center">
+                                                    <Button
+                                                        as={Link} // Botón como Link
+                                                        to={`/facturas/${factura?.id}`}
+                                                        variant="outline-info" // Estilo
+                                                        size="sm"
+                                                        className="me-2"
+                                                        title="Ver Detalles"
+                                                        disabled={!factura?.id} // Deshabilitar si no hay ID
+                                                    >
+                                                        <EyeFill /> {/* Icono Ver */}
+                                                    </Button>
+                                                    <Button
+                                                        variant="outline-danger" // Estilo
+                                                        size="sm"
+                                                        onClick={() => handleShowConfirmModal(factura)}
+                                                        title="Eliminar Factura"
+                                                        disabled={!factura} // Deshabilitar si no hay factura
+                                                    >
+                                                        <TrashFill /> {/* Icono Eliminar */}
+                                                    </Button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </Table>
+                            </div>
+                        )}
+                    </Card.Body>
+                </Card>
+            )}
 
             {/* --- Modal de Confirmación --- */}
-            {/* Asegúrate de que el componente ConfirmationModal exista y funcione correctamente */}
-            <ConfirmationModal
-                show={showConfirmModal}
-                onHide={handleHideConfirmModal}
-                onConfirm={handleDeleteConfirm}
-                title="Confirmar Eliminación"
-                // Mensaje dinámico
-                message={`¿Estás seguro de que deseas eliminar la factura #${facturaAEliminar?.id}? Esta acción no se puede deshacer.`}
-                confirmButtonText="Eliminar Definitivamente"
-                cancelButtonText="Cancelar"
-                confirmVariant="danger" // Estilo del botón de confirmación
-                errorMessage={deleteError} // Pasa el mensaje de error al modal
-            />
-
-        </div>
+            {/* Asegúrate que los props coinciden con tu ConfirmationModal */}
+            {facturaAEliminar && (
+                <ConfirmationModal
+                    show={showConfirmModal}
+                    onHide={handleHideConfirmModal}
+                    onConfirm={handleDeleteConfirm}
+                    title="Confirmar Eliminación"
+                    message={ // Mensaje más seguro
+                        `¿Estás seguro de que deseas eliminar la factura #${facturaAEliminar?.id ?? 'N/A'}? Esta acción no se puede deshacer.`
+                    }
+                    confirmButtonText="Eliminar Definitivamente"
+                    confirmVariant="danger"
+                    isConfirming={isDeleting} // Pasar estado de carga
+                    errorMessage={deleteError} // Pasar error
+                />
+            )}
+        </Container>
     );
 }
 
