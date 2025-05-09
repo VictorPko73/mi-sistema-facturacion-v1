@@ -1,14 +1,75 @@
 <!doctype html>
-<html lang="en">
+<html lang="es"> {/* Cambiado a español */}
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    {/* 
+      Icono para la ventana de la aplicación. 
+      Asegúrate de que 'favicon_app.png' esté en 'frontend/public/'
+    */}
+    <link rel="icon" type="image/png" href="/favicon.icns" /> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-    <script type="module" crossorigin src="/assets/index-haJBgMaB.js"></script>
+    <title>Facturador PYME</title> {/* Título más descriptivo */}
+
+    {/* Estilos para el Splash Screen */}
+    <style>
+      #splash-screen {
+        position: fixed; /* Cubre toda la pantalla */
+        top: 0;
+        left: 0;
+        width: 100vw; /* 100% del ancho de la ventana */
+        height: 100vh; /* 100% del alto de la ventana */
+        background-color: #ffffff; /* Color de fondo, puedes cambiarlo */
+        display: flex;
+        flex-direction: column; /* Alinea imagen y texto verticalmente */
+        align-items: center; /* Centra horizontalmente */
+        justify-content: center; /* Centra verticalmente */
+        z-index: 9999; /* Asegura que esté por encima de otro contenido inicial */
+        transition: opacity 0.5s ease-out; /* Para una desaparición suave (opcional) */
+      }
+
+      #splash-screen img {
+        max-width: 200px; /* Ajusta el tamaño máximo de tu logo */
+        margin-bottom: 20px; /* Espacio entre el logo y el texto */
+      }
+
+      #splash-screen p {
+        font-size: 1.2em; /* Tamaño del texto */
+        color: #333333; /* Color del texto */
+      }
+
+      /* Opcional: un simple spinner de carga */
+      .loader {
+        width: 48px;
+        height: 48px;
+        border: 5px solid #f3f3f3; /* Gris claro */
+        border-top-color: #3498db; /* Azul */
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+        margin-top: 20px;
+      }
+
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-C3NcHR2m.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-Dua2pFkn.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      {/* Contenido del Splash Screen */}
+      <div id="splash-screen">
+        <img src="/logo.png" alt="Cargando aplicación..." />
+        <p>Iniciando Facturador PYME...</p>
+        <span class="loader"></span> {/* Spinner opcional */}
+      </div>
+    </div>
   </body>
 </html>

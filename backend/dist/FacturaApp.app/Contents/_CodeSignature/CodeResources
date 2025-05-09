@@ -30,7 +30,7 @@
 		</data>
 		<key>Resources/base_library.zip</key>
 		<data>
-		L64yoTQTKj/p+sw8HptPAAJQ0AI=
+		LyHHmsZwuju32qYAruxrnEi2p0k=
 		</data>
 		<key>Resources/flask-3.1.0.dist-info/INSTALLER</key>
 		<data>
@@ -84,9 +84,45 @@
 		<data>
 		quns+0SBO2jKUlun+g2YhhU5nIY=
 		</data>
-		<key>Resources/icon-windowed.icns</key>
+		<key>Resources/frontend/dist/assets/html2canvas.esm-CBrSDip1.js</key>
 		<data>
-		eEHOuYpZLB0vKGVIWGZOh5rH8+o=
+		7wcZ2QugAnhqIZIsW31HJTnQt0k=
+		</data>
+		<key>Resources/frontend/dist/assets/index-C3NcHR2m.js</key>
+		<data>
+		Cdz+3jLaG8DRLO3oc67zD6HFtrQ=
+		</data>
+		<key>Resources/frontend/dist/assets/index-Dua2pFkn.css</key>
+		<data>
+		bRO/jr7QTl4LS8Rk+ywJASTquhQ=
+		</data>
+		<key>Resources/frontend/dist/assets/index.es-rzCug77c.js</key>
+		<data>
+		KfxBdSR4LeoK1TomBbU/NaGGEh0=
+		</data>
+		<key>Resources/frontend/dist/assets/purify.es-Bf0oSh3b.js</key>
+		<data>
+		RHqJtcCYRE9FR5oFWAkF/X6uTOg=
+		</data>
+		<key>Resources/frontend/dist/favicon.icns</key>
+		<data>
+		M+e2/Pl9raSu87l6HztkM3ecfIQ=
+		</data>
+		<key>Resources/frontend/dist/index.html</key>
+		<data>
+		+5CpcUNwz+IAq7LJjvZl4tz6lmE=
+		</data>
+		<key>Resources/frontend/dist/logo.png</key>
+		<data>
+		Zk4yIiCylgSCXnkcsSVTp9ysSSI=
+		</data>
+		<key>Resources/frontend/dist/vite.svg</key>
+		<data>
+		9/Odcje3kalF1Spc16j7Nl8xM2Y=
+		</data>
+		<key>Resources/generated-07bbe872c683c36ce82dc0c33d1d595bbdb75a23949335a47df03ef241908df7.icns</key>
+		<data>
+		hD1uuW0cWhHwlrdxOnmVDoZTbYk=
 		</data>
 		<key>Resources/itsdangerous-2.2.0.dist-info/INSTALLER</key>
 		<data>
@@ -200,25 +236,33 @@
 		<data>
 		7wcZ2QugAnhqIZIsW31HJTnQt0k=
 		</data>
+		<key>Resources/static/assets/index-C3NcHR2m.js</key>
+		<data>
+		Cdz+3jLaG8DRLO3oc67zD6HFtrQ=
+		</data>
 		<key>Resources/static/assets/index-Dua2pFkn.css</key>
 		<data>
 		bRO/jr7QTl4LS8Rk+ywJASTquhQ=
 		</data>
-		<key>Resources/static/assets/index-haJBgMaB.js</key>
+		<key>Resources/static/assets/index.es-rzCug77c.js</key>
 		<data>
-		yTUKA1lbCAnJtDFiHaxO7dhrZTU=
-		</data>
-		<key>Resources/static/assets/index.es-D4KR92AA.js</key>
-		<data>
-		QUwpgbC6xL8OTy/rLXM9W3UEcR4=
+		KfxBdSR4LeoK1TomBbU/NaGGEh0=
 		</data>
 		<key>Resources/static/assets/purify.es-Bf0oSh3b.js</key>
 		<data>
 		RHqJtcCYRE9FR5oFWAkF/X6uTOg=
 		</data>
+		<key>Resources/static/favicon.icns</key>
+		<data>
+		M+e2/Pl9raSu87l6HztkM3ecfIQ=
+		</data>
 		<key>Resources/static/index.html</key>
 		<data>
-		3uIV7Q1iooKodRqPSPIevZIm5mE=
+		+5CpcUNwz+IAq7LJjvZl4tz6lmE=
+		</data>
+		<key>Resources/static/logo.png</key>
+		<data>
+		Zk4yIiCylgSCXnkcsSVTp9ysSSI=
 		</data>
 		<key>Resources/static/vite.svg</key>
 		<data>
@@ -372,6 +416,11 @@
 		<dict>
 			<key>symlink</key>
 			<string>../Resources/flask_sqlalchemy-3.1.1.dist-info</string>
+		</dict>
+		<key>Frameworks/frontend</key>
+		<dict>
+			<key>symlink</key>
+			<string>../Resources/frontend</string>
 		</dict>
 		<key>Frameworks/itsdangerous-2.2.0.dist-info</key>
 		<dict>
@@ -1101,7 +1150,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			XAlN5TuUW5BhFp+ENnopqn0SyH6nFUTGVsDwewbS3E0=
+			HsJb4SdfeeOkIyWSIa5C9LivZtcN5/SbA5DqG6jf+kM=
 			</data>
 		</dict>
 		<key>Resources/flask-3.1.0.dist-info/INSTALLER</key>
@@ -1195,11 +1244,74 @@
 			EZbGkh7Ie4PoZfRQ8I0ZuP9VklN/TvcZ6DSE5Uar4z4=
 			</data>
 		</dict>
-		<key>Resources/icon-windowed.icns</key>
+		<key>Resources/frontend/dist/assets/html2canvas.esm-CBrSDip1.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uQo7VuWRab4Phv4EEGmfQsyqFqDIXZgO8OtgaAMvCzY=
+			tPOt2Amm1Z9GJg6P1WyrJA8xU975dzhrIwqDnoywsoE=
+			</data>
+		</dict>
+		<key>Resources/frontend/dist/assets/index-C3NcHR2m.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Njd0xn/2Izi5JzSa47gKUSp5Jy54Gw7VEIActSVpTWw=
+			</data>
+		</dict>
+		<key>Resources/frontend/dist/assets/index-Dua2pFkn.css</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			cdD2JsKO4afpOTC827Mq+K7ssYrVC2Ty46+Vd9Yc5lQ=
+			</data>
+		</dict>
+		<key>Resources/frontend/dist/assets/index.es-rzCug77c.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			fSgZRfQSYuygv7cO1zmmMbcBiqHH/FnrCCbuoCgEYUo=
+			</data>
+		</dict>
+		<key>Resources/frontend/dist/assets/purify.es-Bf0oSh3b.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			zoeUdvvmu29Els3ltSkcvrG7fUlrhBmgovhnnPzB3wU=
+			</data>
+		</dict>
+		<key>Resources/frontend/dist/favicon.icns</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ffCQWZX75FafQo2/dK6PEeDOz2b2CqE7xuNCTXSM+Qk=
+			</data>
+		</dict>
+		<key>Resources/frontend/dist/index.html</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			IkzOPV4k5unr7ZCqIRocebBWEc1w5GUcURQ+35bvsps=
+			</data>
+		</dict>
+		<key>Resources/frontend/dist/logo.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			KqCeRselir8mIRqBHEgwI6yXsyQSWQJhLCA4Lr8yDWU=
+			</data>
+		</dict>
+		<key>Resources/frontend/dist/vite.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			SnSK/UQ5GLsWWRyDTEAdrjPoeGGrXbrQgRw6O0qSFPs=
+			</data>
+		</dict>
+		<key>Resources/generated-07bbe872c683c36ce82dc0c33d1d595bbdb75a23949335a47df03ef241908df7.icns</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			x5YAqQ7jEiZBcLVMct9cwkFfRQvL+HZDwyxN8sunAr4=
 			</data>
 		</dict>
 		<key>Resources/itsdangerous-2.2.0.dist-info/INSTALLER</key>
@@ -1443,6 +1555,13 @@
 			tPOt2Amm1Z9GJg6P1WyrJA8xU975dzhrIwqDnoywsoE=
 			</data>
 		</dict>
+		<key>Resources/static/assets/index-C3NcHR2m.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Njd0xn/2Izi5JzSa47gKUSp5Jy54Gw7VEIActSVpTWw=
+			</data>
+		</dict>
 		<key>Resources/static/assets/index-Dua2pFkn.css</key>
 		<dict>
 			<key>hash2</key>
@@ -1450,18 +1569,11 @@
 			cdD2JsKO4afpOTC827Mq+K7ssYrVC2Ty46+Vd9Yc5lQ=
 			</data>
 		</dict>
-		<key>Resources/static/assets/index-haJBgMaB.js</key>
+		<key>Resources/static/assets/index.es-rzCug77c.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			U8vxiZJD0mdMTFuX6XocDEUq+tp8bTAvOcfkdUOkLy8=
-			</data>
-		</dict>
-		<key>Resources/static/assets/index.es-D4KR92AA.js</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			32unIBKLIhfy8plXXVQUG1xKbH4JYr8iGHDCr8WVw90=
+			fSgZRfQSYuygv7cO1zmmMbcBiqHH/FnrCCbuoCgEYUo=
 			</data>
 		</dict>
 		<key>Resources/static/assets/purify.es-Bf0oSh3b.js</key>
@@ -1471,11 +1583,25 @@
 			zoeUdvvmu29Els3ltSkcvrG7fUlrhBmgovhnnPzB3wU=
 			</data>
 		</dict>
+		<key>Resources/static/favicon.icns</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ffCQWZX75FafQo2/dK6PEeDOz2b2CqE7xuNCTXSM+Qk=
+			</data>
+		</dict>
 		<key>Resources/static/index.html</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			DZGrIOcOMpLvTWpoXkxso7qpXdLxwo+jXonh1sHGeCU=
+			IkzOPV4k5unr7ZCqIRocebBWEc1w5GUcURQ+35bvsps=
+			</data>
+		</dict>
+		<key>Resources/static/logo.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			KqCeRselir8mIRqBHEgwI6yXsyQSWQJhLCA4Lr8yDWU=
 			</data>
 		</dict>
 		<key>Resources/static/vite.svg</key>

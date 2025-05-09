@@ -1,5 +1,5 @@
 ('/Users/victormorenocabello/Desktop/Proyecto '
- 'TFG/mi-sistema-facturacion/backend/build/FacturaApp/PYZ-00.pyz',
+ 'TFG/mi-sistema-facturacion-v1/backend/build/FacturaApp/PYZ-00.pyz',
  [('AppKit',
    '/Users/victormorenocabello/Desktop/Proyecto '
    'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/AppKit/__init__.py',
@@ -362,7 +362,7 @@
    'PYMODULE'),
   ('app',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/app.py',
+   'TFG/mi-sistema-facturacion-v1/backend/app.py',
    'PYMODULE'),
   ('argparse',
    '/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/argparse.py',
@@ -1232,7 +1232,7 @@
    'PYMODULE'),
   ('models',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/models.py',
+   'TFG/mi-sistema-facturacion-v1/backend/models.py',
    'PYMODULE'),
   ('more_itertools',
    '/Users/victormorenocabello/Desktop/Proyecto '
@@ -1573,15 +1573,15 @@
   ('routes', '-', 'PYMODULE'),
   ('routes.clientes',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/routes/clientes.py',
+   'TFG/mi-sistema-facturacion-v1/backend/routes/clientes.py',
    'PYMODULE'),
   ('routes.facturas',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/routes/facturas.py',
+   'TFG/mi-sistema-facturacion-v1/backend/routes/facturas.py',
    'PYMODULE'),
   ('routes.productos',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/routes/productos.py',
+   'TFG/mi-sistema-facturacion-v1/backend/routes/productos.py',
    'PYMODULE'),
   ('runpy',
    '/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/runpy.py',

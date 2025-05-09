@@ -5,7 +5,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('static', 'static'), ('migrations', 'migrations')],
+    datas=[('static', 'static'), ('migrations', 'migrations'), ('../frontend/dist', 'frontend/dist')],
     hiddenimports=['pkg_resources.py2_warn', 'jaraco.text', 'objc', 'Foundation', 'AppKit', 'sqlalchemy.dialects.sqlite'],
     hookspath=[],
     hooksconfig={},
@@ -32,6 +32,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon=['../frontend/public/favicon.icns'],
 )
 coll = COLLECT(
     exe,
@@ -45,6 +46,6 @@ coll = COLLECT(
 app = BUNDLE(
     coll,
     name='FacturaApp.app',
-    icon=None,
+    icon='../frontend/public/favicon.icns',
     bundle_identifier=None,
 )

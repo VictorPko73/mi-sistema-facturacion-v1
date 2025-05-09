@@ -1,6 +1,6 @@
 ([('FacturaApp',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/build/FacturaApp/FacturaApp',
+   'TFG/mi-sistema-facturacion-v1/backend/build/FacturaApp/FacturaApp',
    'EXECUTABLE'),
   ('lib-dynload/_struct.cpython-313-darwin.so',
    '/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/lib-dynload/_struct.cpython-313-darwin.so',
@@ -247,89 +247,133 @@
   ('libsqlite3.0.dylib',
    '/opt/homebrew/opt/sqlite/lib/libsqlite3.0.dylib',
    'BINARY'),
+  ('frontend/dist/assets/html2canvas.esm-CBrSDip1.js',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion-v1/frontend/dist/assets/html2canvas.esm-CBrSDip1.js',
+   'DATA'),
+  ('frontend/dist/assets/index-C3NcHR2m.js',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion-v1/frontend/dist/assets/index-C3NcHR2m.js',
+   'DATA'),
+  ('frontend/dist/assets/index-Dua2pFkn.css',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion-v1/frontend/dist/assets/index-Dua2pFkn.css',
+   'DATA'),
+  ('frontend/dist/assets/index.es-rzCug77c.js',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion-v1/frontend/dist/assets/index.es-rzCug77c.js',
+   'DATA'),
+  ('frontend/dist/assets/purify.es-Bf0oSh3b.js',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion-v1/frontend/dist/assets/purify.es-Bf0oSh3b.js',
+   'DATA'),
+  ('frontend/dist/favicon.icns',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion-v1/frontend/dist/favicon.icns',
+   'DATA'),
+  ('frontend/dist/index.html',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion-v1/frontend/dist/index.html',
+   'DATA'),
+  ('frontend/dist/logo.png',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion-v1/frontend/dist/logo.png',
+   'DATA'),
+  ('frontend/dist/vite.svg',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion-v1/frontend/dist/vite.svg',
+   'DATA'),
   ('migrations/README',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/migrations/README',
+   'TFG/mi-sistema-facturacion-v1/backend/migrations/README',
    'DATA'),
   ('migrations/__pycache__/env.cpython-313.pyc',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/migrations/__pycache__/env.cpython-313.pyc',
+   'TFG/mi-sistema-facturacion-v1/backend/migrations/__pycache__/env.cpython-313.pyc',
    'DATA'),
   ('migrations/alembic.ini',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/migrations/alembic.ini',
+   'TFG/mi-sistema-facturacion-v1/backend/migrations/alembic.ini',
    'DATA'),
   ('migrations/env.py',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/migrations/env.py',
+   'TFG/mi-sistema-facturacion-v1/backend/migrations/env.py',
    'DATA'),
   ('migrations/script.py.mako',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/migrations/script.py.mako',
+   'TFG/mi-sistema-facturacion-v1/backend/migrations/script.py.mako',
    'DATA'),
   ('migrations/versions/38cba16d8cf8_migracion_inicial_crear_tabla_produtos_.py',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/migrations/versions/38cba16d8cf8_migracion_inicial_crear_tabla_produtos_.py',
+   'TFG/mi-sistema-facturacion-v1/backend/migrations/versions/38cba16d8cf8_migracion_inicial_crear_tabla_produtos_.py',
    'DATA'),
   ('migrations/versions/__pycache__/38cba16d8cf8_migracion_inicial_crear_tabla_produtos_.cpython-313.pyc',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/migrations/versions/__pycache__/38cba16d8cf8_migracion_inicial_crear_tabla_produtos_.cpython-313.pyc',
+   'TFG/mi-sistema-facturacion-v1/backend/migrations/versions/__pycache__/38cba16d8cf8_migracion_inicial_crear_tabla_produtos_.cpython-313.pyc',
    'DATA'),
   ('static/assets/html2canvas.esm-CBrSDip1.js',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/static/assets/html2canvas.esm-CBrSDip1.js',
+   'TFG/mi-sistema-facturacion-v1/backend/static/assets/html2canvas.esm-CBrSDip1.js',
+   'DATA'),
+  ('static/assets/index-C3NcHR2m.js',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion-v1/backend/static/assets/index-C3NcHR2m.js',
    'DATA'),
   ('static/assets/index-Dua2pFkn.css',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/static/assets/index-Dua2pFkn.css',
+   'TFG/mi-sistema-facturacion-v1/backend/static/assets/index-Dua2pFkn.css',
    'DATA'),
-  ('static/assets/index-haJBgMaB.js',
+  ('static/assets/index.es-rzCug77c.js',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/static/assets/index-haJBgMaB.js',
-   'DATA'),
-  ('static/assets/index.es-D4KR92AA.js',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/static/assets/index.es-D4KR92AA.js',
+   'TFG/mi-sistema-facturacion-v1/backend/static/assets/index.es-rzCug77c.js',
    'DATA'),
   ('static/assets/purify.es-Bf0oSh3b.js',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/static/assets/purify.es-Bf0oSh3b.js',
+   'TFG/mi-sistema-facturacion-v1/backend/static/assets/purify.es-Bf0oSh3b.js',
+   'DATA'),
+  ('static/favicon.icns',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion-v1/backend/static/favicon.icns',
    'DATA'),
   ('static/index.html',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/static/index.html',
+   'TFG/mi-sistema-facturacion-v1/backend/static/index.html',
+   'DATA'),
+  ('static/logo.png',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion-v1/backend/static/logo.png',
    'DATA'),
   ('static/vite.svg',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/static/vite.svg',
-   'DATA'),
-  ('setuptools/_vendor/importlib_metadata-8.0.0.dist-info/INSTALLER',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/INSTALLER',
-   'DATA'),
-  ('setuptools/_vendor/importlib_metadata-8.0.0.dist-info/top_level.txt',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/top_level.txt',
-   'DATA'),
-  ('setuptools/_vendor/importlib_metadata-8.0.0.dist-info/RECORD',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/RECORD',
-   'DATA'),
-  ('setuptools/_vendor/importlib_metadata-8.0.0.dist-info/LICENSE',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/LICENSE',
-   'DATA'),
-  ('setuptools/_vendor/importlib_metadata-8.0.0.dist-info/METADATA',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/METADATA',
+   'TFG/mi-sistema-facturacion-v1/backend/static/vite.svg',
    'DATA'),
   ('setuptools/_vendor/importlib_metadata-8.0.0.dist-info/WHEEL',
    '/Users/victormorenocabello/Desktop/Proyecto '
    'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/WHEEL',
    'DATA'),
+  ('setuptools/_vendor/importlib_metadata-8.0.0.dist-info/INSTALLER',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/INSTALLER',
+   'DATA'),
+  ('setuptools/_vendor/importlib_metadata-8.0.0.dist-info/METADATA',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/METADATA',
+   'DATA'),
+  ('setuptools/_vendor/importlib_metadata-8.0.0.dist-info/RECORD',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/RECORD',
+   'DATA'),
   ('setuptools/_vendor/importlib_metadata-8.0.0.dist-info/REQUESTED',
    '/Users/victormorenocabello/Desktop/Proyecto '
    'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/REQUESTED',
+   'DATA'),
+  ('setuptools/_vendor/importlib_metadata-8.0.0.dist-info/top_level.txt',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/top_level.txt',
+   'DATA'),
+  ('setuptools/_vendor/importlib_metadata-8.0.0.dist-info/LICENSE',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/LICENSE',
    'DATA'),
   ('jaraco/text/Lorem ipsum.txt',
    '/Users/victormorenocabello/Desktop/Proyecto '
@@ -344,50 +388,58 @@
    '/Users/victormorenocabello/Desktop/Proyecto '
    'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/webview/js/api.js',
    'DATA'),
-  ('webview/js/finish.js',
+  ('webview/js/customize.js',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/webview/js/finish.js',
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/webview/js/customize.js',
    'DATA'),
   ('webview/js/lib/polyfill.js',
    '/Users/victormorenocabello/Desktop/Proyecto '
    'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/webview/js/lib/polyfill.js',
    'DATA'),
-  ('webview/js/customize.js',
+  ('webview/js/finish.js',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/webview/js/customize.js',
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/webview/js/finish.js',
    'DATA'),
   ('Python', 'Python.framework/Versions/3.13/Python', 'SYMLINK'),
-  ('setuptools/_vendor/wheel-0.45.1.dist-info/INSTALLER',
+  ('werkzeug-3.1.3.dist-info/WHEEL',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/INSTALLER',
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/werkzeug-3.1.3.dist-info/WHEEL',
    'DATA'),
-  ('setuptools/_vendor/wheel-0.45.1.dist-info/METADATA',
+  ('MarkupSafe-3.0.2.dist-info/METADATA',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/METADATA',
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/MarkupSafe-3.0.2.dist-info/METADATA',
    'DATA'),
-  ('itsdangerous-2.2.0.dist-info/INSTALLER',
+  ('setuptools/_vendor/wheel-0.45.1.dist-info/WHEEL',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/itsdangerous-2.2.0.dist-info/INSTALLER',
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/WHEEL',
    'DATA'),
-  ('flask_sqlalchemy-3.1.1.dist-info/INSTALLER',
+  ('flask-3.1.0.dist-info/RECORD',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask_sqlalchemy-3.1.1.dist-info/INSTALLER',
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/RECORD',
    'DATA'),
   ('MarkupSafe-3.0.2.dist-info/WHEEL',
    '/Users/victormorenocabello/Desktop/Proyecto '
    'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/MarkupSafe-3.0.2.dist-info/WHEEL',
    'DATA'),
-  ('setuptools/_vendor/wheel-0.45.1.dist-info/REQUESTED',
+  ('werkzeug-3.1.3.dist-info/LICENSE.txt',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/REQUESTED',
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/werkzeug-3.1.3.dist-info/LICENSE.txt',
    'DATA'),
-  ('werkzeug-3.1.3.dist-info/RECORD',
+  ('flask-3.1.0.dist-info/INSTALLER',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/werkzeug-3.1.3.dist-info/RECORD',
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/INSTALLER',
    'DATA'),
-  ('itsdangerous-2.2.0.dist-info/WHEEL',
+  ('flask_sqlalchemy-3.1.1.dist-info/REQUESTED',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/itsdangerous-2.2.0.dist-info/WHEEL',
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask_sqlalchemy-3.1.1.dist-info/REQUESTED',
+   'DATA'),
+  ('werkzeug-3.1.3.dist-info/METADATA',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/werkzeug-3.1.3.dist-info/METADATA',
+   'DATA'),
+  ('werkzeug-3.1.3.dist-info/INSTALLER',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/werkzeug-3.1.3.dist-info/INSTALLER',
    'DATA'),
   ('setuptools/_vendor/wheel-0.45.1.dist-info/LICENSE.txt',
    '/Users/victormorenocabello/Desktop/Proyecto '
@@ -397,113 +449,105 @@
    '/Users/victormorenocabello/Desktop/Proyecto '
    'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/itsdangerous-2.2.0.dist-info/METADATA',
    'DATA'),
-  ('flask_sqlalchemy-3.1.1.dist-info/RECORD',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask_sqlalchemy-3.1.1.dist-info/RECORD',
-   'DATA'),
-  ('flask-3.1.0.dist-info/RECORD',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/RECORD',
-   'DATA'),
-  ('flask_sqlalchemy-3.1.1.dist-info/REQUESTED',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask_sqlalchemy-3.1.1.dist-info/REQUESTED',
-   'DATA'),
-  ('flask-3.1.0.dist-info/REQUESTED',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/REQUESTED',
-   'DATA'),
-  ('setuptools/_vendor/wheel-0.45.1.dist-info/entry_points.txt',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/entry_points.txt',
-   'DATA'),
-  ('MarkupSafe-3.0.2.dist-info/top_level.txt',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/MarkupSafe-3.0.2.dist-info/top_level.txt',
-   'DATA'),
-  ('werkzeug-3.1.3.dist-info/INSTALLER',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/werkzeug-3.1.3.dist-info/INSTALLER',
-   'DATA'),
   ('flask-3.1.0.dist-info/LICENSE.txt',
    '/Users/victormorenocabello/Desktop/Proyecto '
    'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/LICENSE.txt',
    'DATA'),
-  ('flask_sqlalchemy-3.1.1.dist-info/LICENSE.rst',
+  ('setuptools/_vendor/wheel-0.45.1.dist-info/METADATA',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask_sqlalchemy-3.1.1.dist-info/LICENSE.rst',
-   'DATA'),
-  ('MarkupSafe-3.0.2.dist-info/RECORD',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/MarkupSafe-3.0.2.dist-info/RECORD',
-   'DATA'),
-  ('werkzeug-3.1.3.dist-info/LICENSE.txt',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/werkzeug-3.1.3.dist-info/LICENSE.txt',
-   'DATA'),
-  ('flask-3.1.0.dist-info/METADATA',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/METADATA',
-   'DATA'),
-  ('setuptools/_vendor/wheel-0.45.1.dist-info/WHEEL',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/WHEEL',
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/METADATA',
    'DATA'),
   ('setuptools/_vendor/wheel-0.45.1.dist-info/RECORD',
    '/Users/victormorenocabello/Desktop/Proyecto '
    'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/RECORD',
    'DATA'),
-  ('itsdangerous-2.2.0.dist-info/RECORD',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/itsdangerous-2.2.0.dist-info/RECORD',
-   'DATA'),
-  ('itsdangerous-2.2.0.dist-info/LICENSE.txt',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/itsdangerous-2.2.0.dist-info/LICENSE.txt',
-   'DATA'),
-  ('werkzeug-3.1.3.dist-info/WHEEL',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/werkzeug-3.1.3.dist-info/WHEEL',
-   'DATA'),
-  ('werkzeug-3.1.3.dist-info/METADATA',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/werkzeug-3.1.3.dist-info/METADATA',
-   'DATA'),
-  ('flask-3.1.0.dist-info/INSTALLER',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/INSTALLER',
-   'DATA'),
-  ('MarkupSafe-3.0.2.dist-info/LICENSE.txt',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/MarkupSafe-3.0.2.dist-info/LICENSE.txt',
-   'DATA'),
   ('flask_sqlalchemy-3.1.1.dist-info/WHEEL',
    '/Users/victormorenocabello/Desktop/Proyecto '
    'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask_sqlalchemy-3.1.1.dist-info/WHEEL',
-   'DATA'),
-  ('MarkupSafe-3.0.2.dist-info/INSTALLER',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/MarkupSafe-3.0.2.dist-info/INSTALLER',
-   'DATA'),
-  ('MarkupSafe-3.0.2.dist-info/METADATA',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/MarkupSafe-3.0.2.dist-info/METADATA',
-   'DATA'),
-  ('flask-3.1.0.dist-info/entry_points.txt',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/entry_points.txt',
-   'DATA'),
-  ('flask-3.1.0.dist-info/WHEEL',
-   '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/WHEEL',
    'DATA'),
   ('flask_sqlalchemy-3.1.1.dist-info/METADATA',
    '/Users/victormorenocabello/Desktop/Proyecto '
    'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask_sqlalchemy-3.1.1.dist-info/METADATA',
    'DATA'),
+  ('MarkupSafe-3.0.2.dist-info/RECORD',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/MarkupSafe-3.0.2.dist-info/RECORD',
+   'DATA'),
+  ('flask-3.1.0.dist-info/entry_points.txt',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/entry_points.txt',
+   'DATA'),
+  ('itsdangerous-2.2.0.dist-info/WHEEL',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/itsdangerous-2.2.0.dist-info/WHEEL',
+   'DATA'),
+  ('itsdangerous-2.2.0.dist-info/RECORD',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/itsdangerous-2.2.0.dist-info/RECORD',
+   'DATA'),
+  ('flask-3.1.0.dist-info/METADATA',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/METADATA',
+   'DATA'),
+  ('werkzeug-3.1.3.dist-info/RECORD',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/werkzeug-3.1.3.dist-info/RECORD',
+   'DATA'),
+  ('setuptools/_vendor/wheel-0.45.1.dist-info/INSTALLER',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/INSTALLER',
+   'DATA'),
+  ('MarkupSafe-3.0.2.dist-info/LICENSE.txt',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/MarkupSafe-3.0.2.dist-info/LICENSE.txt',
+   'DATA'),
+  ('itsdangerous-2.2.0.dist-info/INSTALLER',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/itsdangerous-2.2.0.dist-info/INSTALLER',
+   'DATA'),
+  ('flask_sqlalchemy-3.1.1.dist-info/RECORD',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask_sqlalchemy-3.1.1.dist-info/RECORD',
+   'DATA'),
+  ('itsdangerous-2.2.0.dist-info/LICENSE.txt',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/itsdangerous-2.2.0.dist-info/LICENSE.txt',
+   'DATA'),
+  ('setuptools/_vendor/wheel-0.45.1.dist-info/REQUESTED',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/REQUESTED',
+   'DATA'),
+  ('MarkupSafe-3.0.2.dist-info/top_level.txt',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/MarkupSafe-3.0.2.dist-info/top_level.txt',
+   'DATA'),
+  ('flask_sqlalchemy-3.1.1.dist-info/LICENSE.rst',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask_sqlalchemy-3.1.1.dist-info/LICENSE.rst',
+   'DATA'),
+  ('flask-3.1.0.dist-info/WHEEL',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/WHEEL',
+   'DATA'),
+  ('flask-3.1.0.dist-info/REQUESTED',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask-3.1.0.dist-info/REQUESTED',
+   'DATA'),
+  ('MarkupSafe-3.0.2.dist-info/INSTALLER',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/MarkupSafe-3.0.2.dist-info/INSTALLER',
+   'DATA'),
+  ('setuptools/_vendor/wheel-0.45.1.dist-info/entry_points.txt',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/entry_points.txt',
+   'DATA'),
+  ('flask_sqlalchemy-3.1.1.dist-info/INSTALLER',
+   '/Users/victormorenocabello/Desktop/Proyecto '
+   'TFG/mi-sistema-facturacion/venv/lib/python3.13/site-packages/flask_sqlalchemy-3.1.1.dist-info/INSTALLER',
+   'DATA'),
   ('base_library.zip',
    '/Users/victormorenocabello/Desktop/Proyecto '
-   'TFG/mi-sistema-facturacion/backend/build/FacturaApp/base_library.zip',
+   'TFG/mi-sistema-facturacion-v1/backend/build/FacturaApp/base_library.zip',
    'DATA'),
   ('Python.framework/Python', 'Versions/Current/Python', 'SYMLINK'),
   ('Python.framework/Resources', 'Versions/Current/Resources', 'SYMLINK'),

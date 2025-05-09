@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>FacturaApp</string>
 	<key>CFBundleIconFile</key>
-	<string>icon-windowed.icns</string>
+	<string>generated-07bbe872c683c36ce82dc0c33d1d595bbdb75a23949335a47df03ef241908df7.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>FacturaApp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
