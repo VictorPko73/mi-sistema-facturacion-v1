@@ -1,13 +1,12 @@
 // frontend/src/pages/FacturaDetalle.jsx
 import React, { useState, useEffect } from 'react';
-import { useParams, Link} from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import apiClient from '../api';
 import { format } from 'date-fns';
 import { generateInvoicePDF } from '../utils/pdfGenerator'; // Asegúrate que la ruta sea correcta
 
 function FacturaDetalle() {
     const { id } = useParams();
-    //const navigate = useNavigate();
     const [factura, setFactura] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -15,7 +14,13 @@ function FacturaDetalle() {
     const formatDateForDisplay = (dateString) => {
         if (!dateString) return 'N/A';
         try {
-            return format(new Date(dateString), 'dd/MM/yyyy HH:mm');
+            // Asegurarse de que la fecha se interpreta correctamente antes de formatear
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) { // Comprobar si la fecha es inválida
+                console.error("Invalid date string for display:", dateString);
+                return dateString; // Devolver el string original si es inválido
+            }
+            return format(date, 'dd/MM/yyyy HH:mm');
         } catch (e) {
             console.error("Error formatting date for display:", e);
             return dateString;
@@ -79,7 +84,7 @@ function FacturaDetalle() {
                             disabled={!factura}
                             title="Generar y descargar factura en formato PDF"
                         >
-                            📄 Descargar PDF
+                            💾 Guardar PDF
                         </button>
                         <button
                             onClick={() => window.print()}
@@ -93,7 +98,6 @@ function FacturaDetalle() {
                 <div className="card-body">
                     {/* Sección Cliente y Detalles Factura */}
                     <div className="row mb-4">
-                        {/* ... (código de cliente y detalles factura sin cambios) ... */}
                         <div className="col-md-6 mb-3 mb-md-0">
                             <h5 className="mb-3">Cliente:</h5>
                             <p className="mb-1"><strong>Nombre:</strong> {factura.cliente?.nombre} {factura.cliente?.apellido}</p>
@@ -108,55 +112,54 @@ function FacturaDetalle() {
                         </div>
                     </div>
 
-                    {/* Tabla de Líneas de Detalle - Revisada */}
+                    {/* Tabla de Líneas de Detalle - MODIFICADA */}
                     <h5 className="mb-3">Líneas de Factura:</h5>
                     <div className="table-responsive mb-4">
                         <table className="table table-bordered table-hover table-sm">
                             <thead className="table-light">
                                 <tr>
                                     <th style={{ width: '5%' }} className="text-center">#</th>
-                                    <th style={{ width: '45%' }}>Producto</th>
+                                    <th style={{ width: '25%' }}>Producto</th>
+                                    {/* NUEVA COLUMNA PARA DESCRIPCIÓN */}
+                                    <th style={{ width: '30%' }}>Descripción</th>
                                     <th style={{ width: '10%' }} className="text-end">Cant.</th>
-                                    <th style={{ width: '20%' }} className="text-end">Precio Unit. (€)</th>
-                                    <th style={{ width: '20%' }} className="text-end">Subtotal (€)</th>
+                                    <th style={{ width: '15%' }} className="text-end">Precio Unit. (€)</th>
+                                    <th style={{ width: '15%' }} className="text-end">Subtotal (€)</th>
                                 </tr>
                             </thead>
-                            {/* Asegurarse que tbody solo contiene tr */}
                             <tbody>
                                 {(factura.detalles && factura.detalles.length > 0) ? (
                                     factura.detalles.map((detalle, index) => (
-                                        // Cada item del map devuelve directamente un tr
                                         <tr key={detalle.id || index}>
                                             <td className="text-center">{index + 1}</td>
                                             <td>{detalle.nombre_producto || `Producto ID: ${detalle.producto_id}`}</td>
+                                            {/* NUEVA CELDA PARA DESCRIPCIÓN */}
+                                            {/* Asume que la descripción viene en detalle.descripcion_producto */}
+                                            <td>{detalle.descripcion_producto || 'N/A'}</td>
                                             <td className="text-end">{detalle.cantidad}</td>
                                             <td className="text-end">{detalle.precio_unitario?.toFixed(2) ?? '0.00'}</td>
                                             <td className="text-end">{detalle.subtotal_linea?.toFixed(2) ?? '0.00'}</td>
                                         </tr>
                                     ))
                                 ) : (
-                                    // El caso 'else' también devuelve directamente un tr
+                                    // Ajustar colSpan para la nueva columna
                                     <tr>
-                                        <td colSpan="5" className="text-center text-muted">No hay líneas de detalle para esta factura.</td>
+                                        <td colSpan="6" className="text-center text-muted">No hay líneas de detalle para esta factura.</td>
                                     </tr>
                                 )}
-                                {/* NO debe haber NADA aquí (ni espacios, ni comentarios JSX) entre el final del map/condicional y el cierre de tbody */}
                             </tbody>
                         </table>
                     </div>
 
-                    {/* Sección de Totales - Revisada */}
+                    {/* Sección de Totales */}
                     <div className="row justify-content-end">
                         <div className="col-md-5 col-lg-4">
                             <table className="table table-sm table-borderless mb-0">
-                                {/* Asegurarse que tbody solo contiene tr */}
                                 <tbody>
-                                    {/* tr directamente dentro de tbody */}
                                     <tr>
                                         <th className="text-end" style={{ width: '60%' }}>Subtotal:</th>
                                         <td className="text-end">{factura.subtotal?.toFixed(2) ?? '0.00'} €</td>
                                     </tr>
-                                    {/* tr directamente dentro de tbody */}
                                     <tr>
                                         <th className="text-end">IVA ({
                                             (factura.subtotal && factura.iva && factura.subtotal !== 0)
@@ -165,12 +168,10 @@ function FacturaDetalle() {
                                         }%):</th>
                                         <td className="text-end">{factura.iva?.toFixed(2) ?? '0.00'} €</td>
                                     </tr>
-                                    {/* tr directamente dentro de tbody */}
                                     <tr className="border-top">
                                         <th className="text-end pt-2 fs-5">Total:</th>
                                         <td className="text-end pt-2 fs-5 fw-bold">{factura.total?.toFixed(2) ?? '0.00'} €</td>
                                     </tr>
-                                    {/* NO debe haber NADA aquí entre el último tr y el cierre de tbody */}
                                 </tbody>
                             </table>
                         </div>
