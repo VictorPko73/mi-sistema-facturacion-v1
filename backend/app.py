@@ -16,11 +16,11 @@ APP_NAME_FOLDER = "FacturaApp" # Usa el mismo nombre que diste a PyInstaller
 basedir = os.path.abspath(os.path.dirname(__file__))
 static_folder_path = os.path.join(basedir, 'static')
 
-# --- Configuración de la Ruta de la Base de Datos (¡NUEVO!) ---
+
 def get_app_support_dir(app_name):
     """Obtiene la ruta a ~/Library/Application Support/<app_name> en macOS"""
     home = os.path.expanduser("~")
-    # ¡Asegúrate de que esta ruta sea correcta para macOS!
+    
     return os.path.join(home, "Library", "Application Support", app_name)
 
 app_support_dir = get_app_support_dir(APP_NAME_FOLDER)
@@ -29,7 +29,7 @@ db_path = os.path.join(app_support_dir, db_name)
 
 # Crear el directorio si no existe
 os.makedirs(app_support_dir, exist_ok=True)
-print(f"Usando base de datos en: {db_path}") # Útil para depuración
+print(f"Usando base de datos en: {db_path}") 
 
 # --- App Flask ---
 app = Flask(__name__,
@@ -39,13 +39,13 @@ app = Flask(__name__,
 # --- CORS ---
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-# --- Base de Datos (Usando la nueva ruta) ---
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path # <-- ¡Usa la nueva ruta!
+# --- Base de Datos
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # --- Extensiones ---
 db.init_app(app)
-migrate = Migrate(app, db) # Migrate seguirá funcionando con esta ruta
+migrate = Migrate(app, db) 
 
 # --- Blueprints (API) ---
 app.register_blueprint(clientes_bp)
@@ -73,7 +73,3 @@ with app.app_context():
         print(f"Error al verificar/crear tablas: {e}")
 
 
-# --- Ejecución Directa (Solo pruebas) ---
-# if __name__ == '__main__':
-#     app.run(debug=False, port=5001)
-# Comentado porque ahora se ejecuta desde main.py

@@ -209,7 +209,7 @@ def create_factura():
                 "id": d.id,
                 "producto_id": d.producto_id,
                 "nombre_producto": nombre_producto,
-                "descripcion_producto": descripcion_producto, # <-- CAMPO AÑADIDO
+                "descripcion_producto": descripcion_producto,
                 "cantidad": d.cantidad,
                 "precio_unitario": float(d.precio_unitario),
                 "subtotal_linea": float(d.subtotal_linea)

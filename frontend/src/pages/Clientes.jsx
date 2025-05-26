@@ -127,7 +127,7 @@ function Clientes() {
                 </Alert>
             )}
 
-            {/* Tabla de Clientes (solo si no está cargando y no hay error O si hay error pero aún hay datos) */}
+            {/* Tabla de Clientes */}
             {!loading && (clientes.length > 0 || !error) && (
                 <Card className="shadow-sm"> {/* Envolver tabla en Card */}
                     <Card.Body>

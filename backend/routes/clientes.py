@@ -4,11 +4,7 @@ from flask import Blueprint, request, jsonify
 from models import db, Cliente, Factura # Importar db, el modelo Cliente y Factura
 from sqlalchemy.exc import IntegrityError
 
-# Crear un Blueprint para las rutas de clientes
-# El primer argumento 'clientes' es el nombre del Blueprint.
-# El segundo argumento __name__ ayuda a Flask a localizar recursos.
-# url_prefix='/api/clientes' significa que todas las rutas definidas aquí
-# comenzarán con /api/clientes (ej: /api/clientes/, /api/clientes/1)
+
 clientes_bp = Blueprint('clientes', __name__, url_prefix='/api/clientes')
 
 # --- Rutas CRUD para Clientes ---
@@ -20,7 +16,7 @@ def create_cliente():
     if not data or not data.get('nombre') or not data.get('email'):
         return jsonify({"error": "Nombre y email son requeridos"}), 400
 
-    # Validar si el email ya existe 
+    # Validar si el email ya existe
     if Cliente.query.filter_by(email=data['email']).first():
         return jsonify({"error": "El email ya está registrado"}), 409 # 409 Conflict
 
@@ -136,7 +132,7 @@ def delete_cliente(id):
         db.session.commit()
         return '', 204 # Éxito, sin contenido
 
-    except IntegrityError: # <-- ¡LA CLAVE!
+    except IntegrityError:
         # Error de integridad (probablemente clave foránea con Factura)
         db.session.rollback() # Deshacer transacción fallida
         # Devolver mensaje específico y código 409 Conflict
