@@ -169,9 +169,7 @@ Para empaquetar la aplicación como un ejecutable de escritorio:
 
 La API RESTful desarrollada con Flask gestiona la comunicación entre el frontend y el backend. Para una descripción detallada de los endpoints disponibles (GET, POST, PUT, DELETE), ejemplos de peticiones/respuestas JSON y consideraciones de autenticación (actualmente no implementada), por favor, consulta la documentación completa del proyecto (documento TFG). 🔍
 
-## 🧑‍💻 Autor
 
-*   **Víctor Manuel Moreno Cabello** 👨‍🎓
 
 ## 📜 Licencia
 
