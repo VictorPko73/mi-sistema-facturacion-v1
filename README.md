@@ -1,4 +1,4 @@
-√\# 🚀 Generador de Facturas para PYMEs (Proyecto TFG) 📄✨
+# 🚀 Generador de Facturas para PYMEs (Proyecto TFG) 📄✨
 
 ## 📝 Descripción
 
